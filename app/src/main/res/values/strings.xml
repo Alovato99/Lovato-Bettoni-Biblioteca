@@ -11,4 +11,9 @@
     <string name="pwdRepeat">Ripeti password</string>
     <string name="registerText">Registrati</string>
     <string name="accAlreadyCreated">Sei già registrato?</string>
+    <string name="invalidEmail">Email non valida</string>
+    <string name="invalidPwd">Password non valida</string>
+    <string name="invalidName">Nome non valido</string>
+    <string name="invalidSurname">Cognome non valido</string>
+    <string name="pwdNotMatch">Le password non coincidono</string>
 </resources>
