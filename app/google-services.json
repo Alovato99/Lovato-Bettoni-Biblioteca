@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "791977986446",
+    "project_id": "bibliotecabl",
+    "storage_bucket": "bibliotecabl.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:791977986446:android:81a291768ee72284b2fcdf",
+        "android_client_info": {
+          "package_name": "com.example.bibliotecabl"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "791977986446-5g7t1ho4hbbmepgvc1d7u848fcadfdl8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyANx_70q8rsKr2u2hkvKqmeqn8PWaXqglQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "791977986446-5g7t1ho4hbbmepgvc1d7u848fcadfdl8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
