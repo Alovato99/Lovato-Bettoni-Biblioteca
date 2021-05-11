@@ -22,7 +22,7 @@
         android:layout_marginBottom="20dp"
         android:fontFamily="@font/teko_bold"
         android:gravity="center"
-        android:text="BibliotecaBL"
+        android:text="@string/AppTitle"
         android:textColor="@color/black"
         android:textSize="44sp" />
     <EditText
@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:hint="Email"
+        android:hint="@string/emailHint"
         android:inputType="textEmailAddress" />
     <EditText
         android:id="@+id/passwordEditText"
@@ -38,26 +38,26 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="16dp"
         android:ems="10"
-        android:hint="Password"
+        android:hint="@string/pwdHint"
         android:inputType="textPassword" />
     <Button
         android:id="@+id/loginButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Accedi" />
+        android:text="@string/loginButtonText" />
     <TextView
         android:id="@+id/forgottenPasswordTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_marginTop="32dp"
-        android:text="Password dimenticata" />
+        android:text="@string/forgotPwd" />
     <TextView
         android:id="@+id/signUpTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:layout_marginTop="16dp"
-        android:text="Crea un nuovo account" />
+        android:text="@string/newAccountText" />
 
 </LinearLayout>

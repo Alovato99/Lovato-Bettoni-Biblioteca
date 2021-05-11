@@ -1,3 +1,14 @@
 <resources>
     <string name="app_name">BibliotecaBL</string>
+    <string name="AppTitle">BibliotecaBL</string>
+    <string name="pwdHint">Password</string>
+    <string name="emailHint">Email</string>
+    <string name="loginButtonText">Accedi</string>
+    <string name="forgotPwd">Password dimenticata</string>
+    <string name="newAccountText">Crea un nuovo account</string>
+    <string name="signupName">Nome</string>
+    <string name="signupSurname">Cognome</string>
+    <string name="pwdRepeat">Ripeti password</string>
+    <string name="registerText">Registrati</string>
+    <string name="accAlreadyCreated">Sei già registrato?</string>
 </resources>
