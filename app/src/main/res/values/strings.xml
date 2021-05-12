@@ -16,4 +16,10 @@
     <string name="invalidName">Nome non valido</string>
     <string name="invalidSurname">Cognome non valido</string>
     <string name="pwdNotMatch">Le password non coincidono</string>
+    <string name="forgottenPassword">Password dimenticata?</string>
+    <string name="forgottenPasswordDescription">Inserisci l\'email e ti invieremo una password temporanea!</string>
+    <string name="backToLogin">Torna al login</string>
+    <string name="submit">Invia</string>
+
+
 </resources>

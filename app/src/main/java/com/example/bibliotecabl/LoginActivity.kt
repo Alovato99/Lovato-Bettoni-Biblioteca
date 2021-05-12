@@ -1,12 +1,17 @@
 package com.example.bibliotecabl
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
+import kotlinx.android.synthetic.main.activity_login.*
 //import kotlinx.android.synthetic.main.activity_login.*
 
 // ### TEST IMPORT ###
 import kotlinx.android.synthetic.main.activity_signup.*
+import kotlinx.android.synthetic.main.activity_signup.emailEditText
+import kotlinx.android.synthetic.main.activity_signup.passwordEditText
+
 //import kotlinx.android.synthetic.main.activity_test.*
 
 class LoginActivity : AppCompatActivity() {
@@ -17,11 +22,26 @@ class LoginActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_signup)
+        setContentView(R.layout.activity_login)
+        signUpTextView.setOnClickListener {
+            onSignUpClick()
+        }
+        forgottenPasswordTextView.setOnClickListener {
+            onForgottenPasswordClick()
+        }
         //start application commit test
     }
-
-
+    private fun onSignUpClick() {
+        val intent = Intent(this, SignUpActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
+    private fun onForgottenPasswordClick()
+    {
+        val intent = Intent(this, ForgottenPasswordActivity::class.java)
+        startActivity(intent)
+        finish()
+    }
     fun checkLogin(v: View?)
     {
         // ### CHECKING LOGIN CREDENTIALS ###
@@ -38,7 +58,7 @@ class LoginActivity : AppCompatActivity() {
             passwordEditText.setError(getString(R.string.invalidPwd))
         }
 
-        val pwdRepeat: String = repeatPasswordEditText.getText().toString()
+        /*val pwdRepeat: String = repeatPasswordEditText.getText().toString()
         if(!checker.isEqualPassword(pwd, pwdRepeat))
         {
             repeatPasswordEditText.setError(getString(R.string.pwdNotMatch))
@@ -54,7 +74,7 @@ class LoginActivity : AppCompatActivity() {
         if(checker.isInvalidNameOrSurname(surnamename))
         {
             surnameEditText.setError(getString(R.string.invalidSurname))
-        }
+        }*/
 
     }
 }
