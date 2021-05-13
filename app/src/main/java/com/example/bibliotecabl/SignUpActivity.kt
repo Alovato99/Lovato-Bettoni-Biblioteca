@@ -104,7 +104,7 @@ class SignUpActivity : AppCompatActivity() {
                 .addOnCompleteListener(this) { task ->
                     if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
-                        Log.d(TAG, "createUserWithEmail:success")
+                        //Log.d(TAG, "createUserWithEmail:success")
                         val currenyUser = auth.currentUser
                         val uid = currenyUser!!.uid
                         val userMap = HashMap<String, String>()
@@ -112,14 +112,14 @@ class SignUpActivity : AppCompatActivity() {
                         val database = FirebaseDatabase.getInstance().getReference("Users").child(uid)
                         database.setValue(userMap).addOnCompleteListener { task ->
                             if (task.isSuccessful) {
-                                val intent = Intent(applicationContext, MainActivity::class.java)
+                               // val intent = Intent(applicationContext, MainActivity::class.java)
                                 startActivity(intent)
                                 finish()
                             }
                         }
                     } else {
                     // If sign in fails, display a message to the user.
-                        Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                        //Log.w(TAG, "createUserWithEmail:failure", task.exception)
                         Toast.makeText(baseContext, "Authentication failed.",
                                 Toast.LENGTH_SHORT).show()
                     }
