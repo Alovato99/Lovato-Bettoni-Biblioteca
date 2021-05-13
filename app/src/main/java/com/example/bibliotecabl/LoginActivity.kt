@@ -5,13 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import kotlinx.android.synthetic.main.activity_login.*
-//import kotlinx.android.synthetic.main.activity_login.*
 
 // ### TEST IMPORT ###
-import kotlinx.android.synthetic.main.activity_signup.*
-import kotlinx.android.synthetic.main.activity_signup.emailEditText
-import kotlinx.android.synthetic.main.activity_signup.passwordEditText
-
+//import kotlinx.android.synthetic.main.activity_signup.*
+//import kotlinx.android.synthetic.main.activity_signup.emailEditText
+//import kotlinx.android.synthetic.main.activity_signup.passwordEditText
 //import kotlinx.android.synthetic.main.activity_test.*
 
 class LoginActivity : AppCompatActivity() {
