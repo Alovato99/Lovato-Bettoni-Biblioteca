@@ -7,7 +7,9 @@ import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_signup.*
 import kotlinx.android.synthetic.main.activity_signup.emailEditText
@@ -22,11 +24,13 @@ class SignUpActivity : AppCompatActivity() {
     // #### FIREBASE AUTH ####
     private lateinit var auth: FirebaseAuth
 
+    private var TAG = "SignUpActivity"
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_signup)
 
-        //auth = Firebase.auth
+        auth = Firebase.auth
         loginTextView.setOnClickListener {
             onLoginClick()
         }
@@ -38,8 +42,7 @@ class SignUpActivity : AppCompatActivity() {
         val password = passwordEditText.text.toString().trim()
         val name = nameEditText.text.toString().trim()
         val surName = surnameEditText.text.toString().trim()
-
-        //createUser(name, surName, email, password)
+        createUser(name, email, password)
 
     }
 
@@ -94,35 +97,37 @@ class SignUpActivity : AppCompatActivity() {
             return
         onSignUp()
 
-
     }
 
 
 
     private fun createUser(userName: String, email: String, password: String) {
         auth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
-                        //Log.d(TAG, "createUserWithEmail:success")
-                        val currenyUser = auth.currentUser
-                        val uid = currenyUser!!.uid
-                        val userMap = HashMap<String, String>()
-                        userMap["name"] = userName
-                        val database = FirebaseDatabase.getInstance().getReference("Users").child(uid)
-                        database.setValue(userMap).addOnCompleteListener { task ->
-                            if (task.isSuccessful) {
+                    Log.d(TAG, "createUserWithEmail:success")
+                    val currenyUser = auth.currentUser
+                    val uid = currenyUser!!.uid
+                    val userMap = HashMap<String, String>()
+                    userMap["name"] = userName
+                    val database = FirebaseDatabase.getInstance().getReference("Users").child(uid)
+                    database.setValue(userMap).addOnCompleteListener { task ->
+                        /*if (task.isSuccessful) {
                                // val intent = Intent(applicationContext, MainActivity::class.java)
                                 startActivity(intent)
                                 finish()
-                            }
-                        }
-                    } else {
-                    // If sign in fails, display a message to the user.
-                        //Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                        Toast.makeText(baseContext, "Authentication failed.",
-                                Toast.LENGTH_SHORT).show()
+                            }*/
                     }
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                    Toast.makeText(
+                        baseContext, "Authentication failed.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
+            }
+
     }
 }
