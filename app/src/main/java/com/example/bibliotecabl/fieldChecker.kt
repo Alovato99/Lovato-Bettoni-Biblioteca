@@ -16,7 +16,7 @@ class fieldChecker {
 
     fun isValidPassword(pwd: String) : Boolean
     {
-        return (pwd !=null && pwd.length >=4)
+        return (pwd !=null && pwd.length >=6)
     }
 
     fun isEqualPassword(pwd1: String, pwd2: String):Boolean

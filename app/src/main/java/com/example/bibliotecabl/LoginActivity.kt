@@ -1,10 +1,18 @@
 package com.example.bibliotecabl
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
+import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_login.emailEditText
+import kotlinx.android.synthetic.main.activity_login.passwordEditText
+import kotlinx.android.synthetic.main.activity_signup.*
 
 // ### TEST IMPORT ###
 //import kotlinx.android.synthetic.main.activity_signup.*
@@ -17,9 +25,15 @@ class LoginActivity : AppCompatActivity() {
     // Public field checker instance
     val checker = fieldChecker()
 
+    private lateinit var auth: FirebaseAuth
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        // Initialize FirebaseAuth
+        auth = Firebase.auth
+
         setContentView(R.layout.activity_login)
         signUpTextView.setOnClickListener {
             onSignUpClick()
@@ -55,24 +69,31 @@ class LoginActivity : AppCompatActivity() {
         {
             passwordEditText.setError(getString(R.string.invalidPwd))
         }
+        onLogin()
 
-        /*val pwdRepeat: String = repeatPasswordEditText.getText().toString()
-        if(!checker.isEqualPassword(pwd, pwdRepeat))
-        {
-            repeatPasswordEditText.setError(getString(R.string.pwdNotMatch))
-        }
-
-
-        val name: String = nameEditText.getText().toString()
-        if(checker.isInvalidNameOrSurname(name))
-        {
-            nameEditText.setError(getString(R.string.invalidName))
-        }
-        val surnamename: String = nameEditText.getText().toString()
-        if(checker.isInvalidNameOrSurname(surnamename))
-        {
-            surnameEditText.setError(getString(R.string.invalidSurname))
-        }*/
-
+    }
+    private fun onLogin()
+    {
+        val email = emailEditText.text.toString().trim()
+        val password = passwordEditText.text.toString().trim()
+        loginUser(email,password)
+    }
+    private fun loginUser(email: String, password: String)
+    {
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener(this) { task ->
+                if (task.isSuccessful) {
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG, "signInWithEmail:success")
+                    val user = auth.currentUser
+                    updateUI(user)
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "signInWithEmail:failure", task.exception)
+                    Toast.makeText(baseContext, "Authentication failed.",
+                        Toast.LENGTH_SHORT).show()
+                    updateUI(null)
+                }
+            }
     }
 }
