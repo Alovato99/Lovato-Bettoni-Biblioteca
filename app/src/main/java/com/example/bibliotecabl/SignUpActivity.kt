@@ -1,13 +1,16 @@
 package com.example.bibliotecabl
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_login.*
@@ -41,8 +44,8 @@ class SignUpActivity : AppCompatActivity() {
         val email = emailEditText.text.toString().trim()
         val password = passwordEditText.text.toString().trim()
         val name = nameEditText.text.toString().trim()
-        val surName = surnameEditText.text.toString().trim()
-        createUser(name, email, password)
+        val surname = surnameEditText.text.toString().trim()
+        createUser(name, surname, email, password)
 
     }
 
@@ -101,7 +104,7 @@ class SignUpActivity : AppCompatActivity() {
 
 
 
-    private fun createUser(userName: String, email: String, password: String) {
+    private fun createUser(name: String, surname: String, email: String, password: String) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
@@ -110,21 +113,54 @@ class SignUpActivity : AppCompatActivity() {
                     val currenyUser = auth.currentUser
                     val uid = currenyUser!!.uid
                     val userMap = HashMap<String, String>()
-                    userMap["name"] = userName
+                    val adminMap = HashMap<String, String>()
                     val database = FirebaseDatabase.getInstance().getReference("Users").child(uid)
+                    userMap["name"] = name
+                    database.setValue(userMap)
+                    userMap["surname"] = surname
+                    database.setValue(userMap)
+                    //userMap["admin"]="true"
+
+
+
+
+
+
+
+
+
+                   val database2 = FirebaseDatabase.getInstance().getReference("Users")
+//You must remember to remove the listener when you finish using it, also to keep track of changes you can use the ChildChange
+                    database2.addChildEventListener(object : ChildEventListener {
+                        override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
+                            Log.e(dataSnapshot.key, dataSnapshot.childrenCount.toString() + "")
+                            userMap["admin"] = (dataSnapshot.hasChildren().toString())
+                        }
+
+                        override fun onChildChanged(dataSnapshot: DataSnapshot, s: String?) {}
+                        override fun onChildRemoved(dataSnapshot: DataSnapshot) {}
+                        override fun onChildMoved(dataSnapshot: DataSnapshot, s: String?) {}
+                        override fun onCancelled(databaseError: DatabaseError) {}
+                    })
+
+
+
+
+
+
                     database.setValue(userMap).addOnCompleteListener { task ->
-                        /*if (task.isSuccessful) {
-                               // val intent = Intent(applicationContext, MainActivity::class.java)
+                        if (task.isSuccessful) {
+                               val intent = Intent(applicationContext, LoginActivity::class.java)
                                 startActivity(intent)
                                 finish()
-                            }*/
+                            }
                     }
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "createUserWithEmail:failure", task.exception)
                     Toast.makeText(
-                        baseContext, "Authentication failed.",
-                        Toast.LENGTH_SHORT
+                            baseContext, R.string.accountAlreadyExists,
+                            Toast.LENGTH_SHORT
                     ).show()
                 }
             }

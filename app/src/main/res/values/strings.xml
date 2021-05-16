@@ -20,6 +20,8 @@
     <string name="forgottenPasswordDescription">Inserisci l\'email e ti invieremo una password temporanea!</string>
     <string name="backToLogin">Torna al login</string>
     <string name="submit">Invia</string>
+    <string name="authenticationFailed">Email o password non valida</string>
+    <string name="accountAlreadyExists">Registrazione fallita. Esiste già un\'account registrato con la seguente email</string>
 
 
 </resources>
