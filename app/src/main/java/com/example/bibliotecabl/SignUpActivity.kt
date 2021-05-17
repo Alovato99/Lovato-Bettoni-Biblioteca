@@ -1,14 +1,14 @@
 package com.example.bibliotecabl
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_signup.*
@@ -41,9 +41,8 @@ class SignUpActivity : AppCompatActivity() {
         val email = emailEditText.text.toString().trim()
         val password = passwordEditText.text.toString().trim()
         val name = nameEditText.text.toString().trim()
-        val surName = surnameEditText.text.toString().trim()
-        val completeName = arrayOf<String>(name,surName)
-        createUser(name, email, password)
+        val surname = surnameEditText.text.toString().trim()
+        createUser(name, surname, email, password)
 
     }
 
@@ -102,34 +101,81 @@ class SignUpActivity : AppCompatActivity() {
 
 
 
-    private fun createUser(name: String, email: String, password: String) {
+    private fun createUser(name: String, surname: String, email: String, password: String) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // else if successful
-                    Log.d(TAG, "Successfully created user with uid: ${task.result?.user?.uid}")
-                    uploadNameToFirebase(name)
-                    Log.d(TAG, "Successfully uploaded")
+                    // Sign in success, update UI with the signed-in user's information
+                    Log.d(TAG, "createUserWithEmail:success")
+                    val currenyUser = auth.currentUser
+                    val uid = currenyUser!!.uid
+                    val userMap = HashMap<String, String>()
+                    val database = FirebaseDatabase.getInstance().getReference("Users").child(uid)
+                    userMap["name"] = name
+                    database.setValue(userMap)
+                    userMap["surname"] = surname
+                    database.setValue(userMap)
+
+                    /*userMap["admin"]="true"
+
+                   val database2 = FirebaseDatabase.getInstance().getReference("Users")
+//You must remember to remove the listener when you finish using it, also to keep track of changes you can use the ChildChange
+                    database2.addChildEventListener(object : ChildEventListener {
+                        override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
+                            Log.e(dataSnapshot.key, dataSnapshot.childrenCount.toString() + "")
+                            userMap["admin"] = (dataSnapshot.childrenCount.toString())
+                            database.setValue(userMap).addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    val intent = Intent(applicationContext, LoginActivity::class.java)
+                                    startActivity(intent)
+                                    finish()
+                                }
+                            }
+                        }
+
+                        override fun onChildChanged(dataSnapshot: DataSnapshot, s: String?) {}
+                        override fun onChildRemoved(dataSnapshot: DataSnapshot) {}
+                        override fun onChildMoved(dataSnapshot: DataSnapshot, s: String?) {}
+                        override fun onCancelled(databaseError: DatabaseError) {}
+                    })*/
+
+
+                    val database2 = FirebaseDatabase.getInstance().getReference("Users")
+                    database2.addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(dataSnapshot: DataSnapshot) {
+                            val counter = dataSnapshot.childrenCount.toInt()
+                            userMap["admin"] = (counter==1).toString()
+                            database.setValue(userMap).addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    val intent = Intent(applicationContext, LoginActivity::class.java)
+                                    startActivity(intent)
+                                    finish()
+                                }
+                            }
+                        }
+
+                        override fun onCancelled(databaseError: DatabaseError) {}
+                    })
+
+
+
+
+                    /*database.setValue(userMap).addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                               val intent = Intent(applicationContext, LoginActivity::class.java)
+                                startActivity(intent)
+                                finish()
+                            }
+                    }*/
+                } else {
+                    // If sign in fails, display a message to the user.
+                    Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                    Toast.makeText(
+                            baseContext, R.string.accountAlreadyExists,
+                            Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
-                .addOnFailureListener{
-                    Log.d(TAG, "Failed to create user: ${it.message}")
-                    Toast.makeText(this, "Failed to create user: ${it.message}", Toast.LENGTH_SHORT).show()
-                }
-    }
 
-    private fun uploadNameToFirebase(name: String)
-    {
-        val uid = FirebaseAuth.getInstance().uid ?: ""
-        val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
-
-
-        ref.setValue(name)
-                .addOnSuccessListener {
-                    Log.d(TAG, "Finally we saved the user to Firebase Database")
-                }
-                .addOnFailureListener {
-                    Log.d(TAG, "Failed to set value to database: ${it.message}")
-                }
     }
 }

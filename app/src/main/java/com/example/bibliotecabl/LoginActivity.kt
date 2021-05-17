@@ -24,8 +24,9 @@ class LoginActivity : AppCompatActivity() {
 
     // Public field checker instance
     val checker = fieldChecker()
-    private var TAG = "SignInActivity"
+
     private lateinit var auth: FirebaseAuth
+    private var TAG = "SignUpActivity"
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,11 +59,9 @@ class LoginActivity : AppCompatActivity() {
     {
         // ### CHECKING LOGIN CREDENTIALS ###
         val email: String = emailEditText.getText().toString()
-        var errore: Boolean = false
         if(!checker.isValidEmail(email))
         {
             emailEditText.setError(getString(R.string.invalidEmail))
-            errore=true
         }
 
 
@@ -70,11 +69,8 @@ class LoginActivity : AppCompatActivity() {
         if(!checker.isValidPassword(pwd))
         {
             passwordEditText.setError(getString(R.string.invalidPwd))
-            errore=true
         }
-        if(!errore)
-            onLogin()
-        return
+        onLogin()
 
     }
     private fun onLogin()
@@ -83,7 +79,6 @@ class LoginActivity : AppCompatActivity() {
         val password = passwordEditText.text.toString().trim()
         loginUser(email,password)
     }
-
     private fun loginUser(email: String, password: String)
     {
         auth.signInWithEmailAndPassword(email, password)
@@ -91,17 +86,13 @@ class LoginActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithEmail:success")
-                    val user = auth.currentUser
-                    Toast.makeText(
-                        baseContext, "Authentication successo.",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    val intent = Intent(this, SignUpActivity::class.java)
+                    startActivity(intent)
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithEmail:failure", task.exception)
-                    Toast.makeText(baseContext, "Authentication failed.",
+                    Toast.makeText(baseContext,R.string.authenticationFailed,
                         Toast.LENGTH_SHORT).show()
-
                 }
             }
     }
