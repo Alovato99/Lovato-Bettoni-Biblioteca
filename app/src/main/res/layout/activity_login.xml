@@ -40,12 +40,14 @@
         android:ems="10"
         android:hint="@string/pwdHint"
         android:inputType="textPassword" />
+
     <Button
         android:id="@+id/loginButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="checkLogin"
         android:text="@string/loginButtonText"
-        android:onClick="checkLogin"/>
+        app:backgroundTint="@color/blueLink" />
     <TextView
         android:id="@+id/forgottenPasswordTextView"
         android:layout_width="match_parent"

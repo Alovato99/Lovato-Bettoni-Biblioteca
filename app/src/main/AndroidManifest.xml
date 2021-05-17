@@ -9,6 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BibliotecaBL">
+        <activity android:name=".HomeActivity"></activity>
         <activity android:name=".LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -16,10 +17,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".SignUpActivity">
-        </activity>
-        <activity android:name=".ForgottenPasswordActivity">
-        </activity>
+        <activity android:name=".SignUpActivity"></activity>
+        <activity android:name=".ForgottenPasswordActivity"></activity>
     </application>
 
 </manifest>

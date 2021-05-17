@@ -2,6 +2,7 @@ package com.example.bibliotecabl
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.health.UidHealthStats
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -111,10 +112,12 @@ class SignUpActivity : AppCompatActivity() {
                     val uid = currenyUser!!.uid
                     val userMap = HashMap<String, String>()
                     val database = FirebaseDatabase.getInstance().getReference("Users").child(uid)
-                    userMap["name"] = name
+                    /*userMap["name"] = name
                     database.setValue(userMap)
                     userMap["surname"] = surname
-                    database.setValue(userMap)
+                    database.setValue(userMap)*/
+
+
 
                     /*userMap["admin"]="true"
 
@@ -144,8 +147,9 @@ class SignUpActivity : AppCompatActivity() {
                     database2.addListenerForSingleValueEvent(object : ValueEventListener {
                         override fun onDataChange(dataSnapshot: DataSnapshot) {
                             val counter = dataSnapshot.childrenCount.toInt()
-                            userMap["admin"] = (counter==1).toString()
-                            database.setValue(userMap).addOnCompleteListener { task ->
+                            //userMap["admin"] = (counter==1).toString()
+                            val user = User(name, surname, (counter==0))
+                            database.setValue(user).addOnCompleteListener { task ->
                                 if (task.isSuccessful) {
                                     val intent = Intent(applicationContext, LoginActivity::class.java)
                                     startActivity(intent)
@@ -179,3 +183,5 @@ class SignUpActivity : AppCompatActivity() {
 
     }
 }
+
+class User (val name: String, val surname: String, val admin: Boolean)
