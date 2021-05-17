@@ -24,7 +24,7 @@ class LoginActivity : AppCompatActivity() {
 
     // Public field checker instance
     val checker = fieldChecker()
-
+    private var TAG = "SignInActivity"
     private lateinit var auth: FirebaseAuth
 
 
@@ -58,9 +58,11 @@ class LoginActivity : AppCompatActivity() {
     {
         // ### CHECKING LOGIN CREDENTIALS ###
         val email: String = emailEditText.getText().toString()
+        var errore: Boolean = false
         if(!checker.isValidEmail(email))
         {
             emailEditText.setError(getString(R.string.invalidEmail))
+            errore=true
         }
 
 
@@ -68,8 +70,11 @@ class LoginActivity : AppCompatActivity() {
         if(!checker.isValidPassword(pwd))
         {
             passwordEditText.setError(getString(R.string.invalidPwd))
+            errore=true
         }
-        onLogin()
+        if(!errore)
+            onLogin()
+        return
 
     }
     private fun onLogin()
@@ -78,6 +83,7 @@ class LoginActivity : AppCompatActivity() {
         val password = passwordEditText.text.toString().trim()
         loginUser(email,password)
     }
+
     private fun loginUser(email: String, password: String)
     {
         auth.signInWithEmailAndPassword(email, password)
@@ -86,13 +92,16 @@ class LoginActivity : AppCompatActivity() {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithEmail:success")
                     val user = auth.currentUser
-                    updateUI(user)
+                    Toast.makeText(
+                        baseContext, "Authentication successo.",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithEmail:failure", task.exception)
                     Toast.makeText(baseContext, "Authentication failed.",
                         Toast.LENGTH_SHORT).show()
-                    updateUI(null)
+
                 }
             }
     }

@@ -42,6 +42,7 @@ class SignUpActivity : AppCompatActivity() {
         val password = passwordEditText.text.toString().trim()
         val name = nameEditText.text.toString().trim()
         val surName = surnameEditText.text.toString().trim()
+        val completeName = arrayOf<String>(name,surName)
         createUser(name, email, password)
 
     }
@@ -101,33 +102,34 @@ class SignUpActivity : AppCompatActivity() {
 
 
 
-    private fun createUser(userName: String, email: String, password: String) {
+    private fun createUser(name: String, email: String, password: String) {
         auth.createUserWithEmailAndPassword(email, password)
             .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
-                    // Sign in success, update UI with the signed-in user's information
-                    Log.d(TAG, "createUserWithEmail:success")
-                    val currenyUser = auth.currentUser
-                    val uid = currenyUser!!.uid
-                    val userMap = HashMap<String, String>()
-                    userMap["name"] = userName
-                    val database = FirebaseDatabase.getInstance().getReference("Users").child(uid)
-                    database.setValue(userMap).addOnCompleteListener { task ->
-                        /*if (task.isSuccessful) {
-                               // val intent = Intent(applicationContext, MainActivity::class.java)
-                                startActivity(intent)
-                                finish()
-                            }*/
-                    }
-                } else {
-                    // If sign in fails, display a message to the user.
-                    Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                    Toast.makeText(
-                        baseContext, "Authentication failed.",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    // else if successful
+                    Log.d(TAG, "Successfully created user with uid: ${task.result?.user?.uid}")
+                    uploadNameToFirebase(name)
+                    Log.d(TAG, "Successfully uploaded")
                 }
             }
+                .addOnFailureListener{
+                    Log.d(TAG, "Failed to create user: ${it.message}")
+                    Toast.makeText(this, "Failed to create user: ${it.message}", Toast.LENGTH_SHORT).show()
+                }
+    }
 
+    private fun uploadNameToFirebase(name: String)
+    {
+        val uid = FirebaseAuth.getInstance().uid ?: ""
+        val ref = FirebaseDatabase.getInstance().getReference("/users/$uid")
+
+
+        ref.setValue(name)
+                .addOnSuccessListener {
+                    Log.d(TAG, "Finally we saved the user to Firebase Database")
+                }
+                .addOnFailureListener {
+                    Log.d(TAG, "Failed to set value to database: ${it.message}")
+                }
     }
 }
