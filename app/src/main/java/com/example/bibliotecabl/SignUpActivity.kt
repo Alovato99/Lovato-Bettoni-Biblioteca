@@ -8,10 +8,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.database.ChildEventListener
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_signup.*
@@ -113,48 +110,63 @@ class SignUpActivity : AppCompatActivity() {
                     val currenyUser = auth.currentUser
                     val uid = currenyUser!!.uid
                     val userMap = HashMap<String, String>()
-                    val adminMap = HashMap<String, String>()
                     val database = FirebaseDatabase.getInstance().getReference("Users").child(uid)
                     userMap["name"] = name
                     database.setValue(userMap)
                     userMap["surname"] = surname
                     database.setValue(userMap)
-                    //userMap["admin"]="true"
 
-
-
-
-
-
-
-
+                    /*userMap["admin"]="true"
 
                    val database2 = FirebaseDatabase.getInstance().getReference("Users")
 //You must remember to remove the listener when you finish using it, also to keep track of changes you can use the ChildChange
                     database2.addChildEventListener(object : ChildEventListener {
                         override fun onChildAdded(dataSnapshot: DataSnapshot, s: String?) {
                             Log.e(dataSnapshot.key, dataSnapshot.childrenCount.toString() + "")
-                            userMap["admin"] = (dataSnapshot.hasChildren().toString())
+                            userMap["admin"] = (dataSnapshot.childrenCount.toString())
+                            database.setValue(userMap).addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    val intent = Intent(applicationContext, LoginActivity::class.java)
+                                    startActivity(intent)
+                                    finish()
+                                }
+                            }
                         }
 
                         override fun onChildChanged(dataSnapshot: DataSnapshot, s: String?) {}
                         override fun onChildRemoved(dataSnapshot: DataSnapshot) {}
                         override fun onChildMoved(dataSnapshot: DataSnapshot, s: String?) {}
                         override fun onCancelled(databaseError: DatabaseError) {}
+                    })*/
+
+
+                    val database2 = FirebaseDatabase.getInstance().getReference("Users")
+                    database2.addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(dataSnapshot: DataSnapshot) {
+                            val counter = dataSnapshot.childrenCount.toInt()
+                            userMap["admin"] = (counter==1).toString()
+                            database.setValue(userMap).addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    val intent = Intent(applicationContext, LoginActivity::class.java)
+                                    startActivity(intent)
+                                    finish()
+                                }
+                            }
+                        }
+
+                        override fun onCancelled(databaseError: DatabaseError) {}
                     })
 
 
 
 
-
-
-                    database.setValue(userMap).addOnCompleteListener { task ->
+                    /*database.setValue(userMap).addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                                val intent = Intent(applicationContext, LoginActivity::class.java)
                                 startActivity(intent)
                                 finish()
                             }
-                    }
+                    }*/
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "createUserWithEmail:failure", task.exception)
