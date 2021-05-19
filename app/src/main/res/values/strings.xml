@@ -24,4 +24,14 @@
     <string name="accountAlreadyExists">Registrazione fallita. Esiste già un\'account registrato con la seguente email</string>
 
 
+
+
+    <string name="nav_header_title">Nome Cognome</string>
+    <string name="nav_header_subtitle">email@email.com</string>
+
+    <string name="menu_home">Home</string>
+    <string name="menu_rentals">Prenotazioni</string>
+    <string name="menu_settings">Impostazioni account</string>
+
+
 </resources>
