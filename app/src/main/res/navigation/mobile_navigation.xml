@@ -22,4 +22,9 @@
         android:name="com.example.bibliotecabl.ui.settings.SettingsFragment"
         android:label="@string/menu_settings"
         tools:layout="@layout/fragment_settings" />
+    <fragment
+        android:id="@+id/nav_browse_books"
+        android:name="com.example.bibliotecabl.ui.browsebooks.BrowseBooksFragment"
+        android:label="@string/menu_settings"
+        tools:layout="@layout/fragmen_browse_books" />
 </navigation>

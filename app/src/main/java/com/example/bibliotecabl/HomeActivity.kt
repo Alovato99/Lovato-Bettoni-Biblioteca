@@ -3,6 +3,7 @@ package com.example.bibliotecabl
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import androidx.appcompat.widget.Toolbar
 import androidx.drawerlayout.widget.DrawerLayout
@@ -14,13 +15,17 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.nav_header_main.*
 
 
 class HomeActivity : AppCompatActivity() {
 
     private lateinit var auth: FirebaseAuth
     private lateinit var appBarConfiguration: AppBarConfiguration
+    private var completeName: String =""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,9 +43,34 @@ class HomeActivity : AppCompatActivity() {
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
         appBarConfiguration = AppBarConfiguration(setOf(
-                R.id.nav_home, R.id.nav_rentals, R.id.nav_settings), drawerLayout)
+                R.id.nav_home, R.id.nav_rentals, R.id.nav_settings, R.id.nav_browse_books), drawerLayout)
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+
+
+        val currenyUser = auth.currentUser
+        val uid = currenyUser!!.uid
+        val database = Firebase.database.reference
+        database.child("Users").child(uid).child("name").get().addOnSuccessListener {
+            completeName = it.getValue().toString()
+            Log.e("firebase", "Getting data ${it.getValue()}")
+
+        }.addOnFailureListener{
+            Log.e("firebase", "Error getting data", it)
+        }
+
+
+        database.child("Users").child(uid).child("surname").get().addOnSuccessListener {
+            completeName += " " + it.value.toString()
+
+
+        }.addOnFailureListener{
+            Log.e("firebase", "Error getting data", it)
+        }
+
+
+
     }
     override fun onStart() {
         super.onStart()
@@ -48,6 +78,7 @@ class HomeActivity : AppCompatActivity() {
         val currentUser = auth.currentUser
         if(currentUser == null) {
             val intent = Intent(this, LoginActivity::class.java)
+
             startActivity(intent)
             finish()
         }
@@ -58,7 +89,34 @@ class HomeActivity : AppCompatActivity() {
 
 
     override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment)
+          val navController = findNavController(R.id.nav_host_fragment)
+
+//        val currenyUser = auth.currentUser
+//        val uid = currenyUser!!.uid
+//        var name : String = ""
+//        //val database = FirebaseDatabase.getInstance().getReference()
+//        val database = Firebase.database.reference
+//        database.child("Users").child(uid).child("name").get().addOnSuccessListener {
+//            name = it.getValue().toString()
+//            Log.e("firebase", "Getting data ${it.getValue()}")
+//
+//        }.addOnFailureListener{
+//            Log.e("firebase", "Error getting data", it)
+//        }
+//
+//
+//        database.child("Users").child(uid).child("surname").get().addOnSuccessListener {
+//            //name += " " + it.value.toString()
+//            homeName.setText(name + " " + it.getValue().toString())
+//
+//        }.addOnFailureListener{
+//            Log.e("firebase", "Error getting data", it)
+//        }
+
+
+        homeName.setText(completeName)
+        homeEmail.setText(auth.currentUser?.email.toString())
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+
     }
 }

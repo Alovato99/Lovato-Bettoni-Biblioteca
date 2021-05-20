@@ -110,15 +110,11 @@ class SignUpActivity : AppCompatActivity() {
                     Log.d(TAG, "createUserWithEmail:success")
                     val currenyUser = auth.currentUser
                     val uid = currenyUser!!.uid
-                    val userMap = HashMap<String, String>()
                     val database = FirebaseDatabase.getInstance().getReference("Users").child(uid)
                     /*userMap["name"] = name
                     database.setValue(userMap)
                     userMap["surname"] = surname
                     database.setValue(userMap)*/
-
-
-
                     /*userMap["admin"]="true"
 
                    val database2 = FirebaseDatabase.getInstance().getReference("Users")
