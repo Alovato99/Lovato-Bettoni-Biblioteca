@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+
+
+    <group
+        android:checkableBehavior="single">
+<!--        <item-->
+<!--            android:id="@+id/nav_home"-->
+<!--            android:title="@string/menu_home" />-->
+<!--        <item-->
+<!--            android:id="@+id/nav_rentals"-->
+<!--            android:title="@string/menu_rentals" />-->
+<!--        <item-->
+<!--            android:id="@+id/nav_settings"-->
+<!--            android:title="@string/menu_settings" />-->
+<!--        <item-->
+<!--            android:id="@+id/nav_browse_books"-->
+<!--            android:title="@string/menu_books" />-->
+        <item
+            android:id="@+id/nav_add_books"
+            android:title="@string/menu_add_books" />
+        <item
+            android:id="@+id/nav_manage_admins"
+            android:title="@string/menu_manage_admins" />
+    </group>
+</menu>

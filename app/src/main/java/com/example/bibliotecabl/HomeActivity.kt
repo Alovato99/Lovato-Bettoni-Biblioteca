@@ -18,6 +18,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.activity_home.*
 import kotlinx.android.synthetic.main.nav_header_main.*
 
 
@@ -42,22 +43,35 @@ class HomeActivity : AppCompatActivity() {
         setSupportActionBar(toolbar)
 
         val drawerLayout: DrawerLayout = findViewById(R.id.drawer_layout)
-        val navView: NavigationView = findViewById(R.id.nav_view)
+
+
+        val navView: NavigationView = findViewById(R.id.nav_view_admin)
         val navController = findNavController(R.id.nav_host_fragment)
+
+
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
+
+
+        appBarConfiguration = AppBarConfiguration(setOf())
+
+
         database.child("Users").child(uid).child("admin").get().addOnSuccessListener {
             if(it.getValue().toString().toBoolean())
             {
                 //Creo menu utente admin
                 appBarConfiguration = AppBarConfiguration(setOf(
                         R.id.nav_home, R.id.nav_rentals, R.id.nav_settings, R.id.nav_browse_books,R.id.nav_add_books,R.id.nav_manage_admins), drawerLayout)
+
+                nav_view_admin.inflateMenu(R.menu.activity_main_drawer_admin)
+
             }
             else
             {
                 //Creo menu utente normale
                 appBarConfiguration = AppBarConfiguration(setOf(
                         R.id.nav_home, R.id.nav_rentals, R.id.nav_settings, R.id.nav_browse_books), drawerLayout)
+
             }
 
 
@@ -69,10 +83,8 @@ class HomeActivity : AppCompatActivity() {
         appBarConfiguration = AppBarConfiguration(setOf(
                 R.id.nav_home, R.id.nav_rentals, R.id.nav_settings, R.id.nav_browse_books,R.id.nav_add_books,R.id.nav_manage_admins), drawerLayout)
 
-
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
 
 
 
@@ -136,6 +148,7 @@ class HomeActivity : AppCompatActivity() {
 //        }.addOnFailureListener{
 //            Log.e("firebase", "Error getting data", it)
 //        }
+
 
 
         homeName.setText(completeName)
