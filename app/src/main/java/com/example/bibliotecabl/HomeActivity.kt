@@ -33,6 +33,10 @@ class HomeActivity : AppCompatActivity() {
 
         auth = Firebase.auth
 
+        val currentUser = auth.currentUser
+        val uid = currentUser!!.uid
+        val database = Firebase.database.reference
+
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -42,16 +46,36 @@ class HomeActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
+        database.child("Users").child(uid).child("admin").get().addOnSuccessListener {
+            if(it.getValue().toString().toBoolean())
+            {
+                //Creo menu utente admin
+                appBarConfiguration = AppBarConfiguration(setOf(
+                        R.id.nav_home, R.id.nav_rentals, R.id.nav_settings, R.id.nav_browse_books,R.id.nav_add_books,R.id.nav_manage_admins), drawerLayout)
+            }
+            else
+            {
+                //Creo menu utente normale
+                appBarConfiguration = AppBarConfiguration(setOf(
+                        R.id.nav_home, R.id.nav_rentals, R.id.nav_settings, R.id.nav_browse_books), drawerLayout)
+            }
+
+
+    }.addOnFailureListener{
+            appBarConfiguration = AppBarConfiguration(setOf(
+                    R.id.nav_home, R.id.nav_rentals, R.id.nav_settings, R.id.nav_browse_books), drawerLayout)
+    }
+
         appBarConfiguration = AppBarConfiguration(setOf(
-                R.id.nav_home, R.id.nav_rentals, R.id.nav_settings, R.id.nav_browse_books), drawerLayout)
+                R.id.nav_home, R.id.nav_rentals, R.id.nav_settings, R.id.nav_browse_books,R.id.nav_add_books,R.id.nav_manage_admins), drawerLayout)
+
+
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
 
 
-        val currenyUser = auth.currentUser
-        val uid = currenyUser!!.uid
-        val database = Firebase.database.reference
+
         database.child("Users").child(uid).child("name").get().addOnSuccessListener {
             completeName = it.getValue().toString()
             Log.e("firebase", "Getting data ${it.getValue()}")
@@ -91,8 +115,8 @@ class HomeActivity : AppCompatActivity() {
     override fun onSupportNavigateUp(): Boolean {
           val navController = findNavController(R.id.nav_host_fragment)
 
-//        val currenyUser = auth.currentUser
-//        val uid = currenyUser!!.uid
+//        val currentUser = auth.currentUser
+//        val uid = currentUser!!.uid
 //        var name : String = ""
 //        //val database = FirebaseDatabase.getInstance().getReference()
 //        val database = Firebase.database.reference

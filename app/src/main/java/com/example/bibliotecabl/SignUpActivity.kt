@@ -108,8 +108,8 @@ class SignUpActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "createUserWithEmail:success")
-                    val currenyUser = auth.currentUser
-                    val uid = currenyUser!!.uid
+                    val currentUser = auth.currentUser
+                    val uid = currentUser!!.uid
                     val database = FirebaseDatabase.getInstance().getReference("Users").child(uid)
                     /*userMap["name"] = name
                     database.setValue(userMap)

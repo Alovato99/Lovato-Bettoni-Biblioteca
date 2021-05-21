@@ -1,4 +1,4 @@
-package com.example.bibliotecabl.ui.browsebooks
+package com.example.bibliotecabl.ui.manageadmins
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,20 +10,20 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.example.bibliotecabl.R
 
-class BrowseBooksFragment: Fragment() {
+class ManageAdminsFragment: Fragment() {
 
-    private lateinit var browseBooksViewModel: BrowseBooksViewModel
+    private lateinit var manageAdminsViewModel: ManageAdminsViewModel
 
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        browseBooksViewModel =
-                ViewModelProvider(this).get(BrowseBooksViewModel::class.java)
-        val root = inflater.inflate(R.layout.fragment_manage_admins, container, false)
-        val textView: TextView = root.findViewById(R.id.text_manage_admins)
-        browseBooksViewModel.text.observe(viewLifecycleOwner, Observer {
+        manageAdminsViewModel =
+                ViewModelProvider(this).get(ManageAdminsViewModel::class.java)
+        val root = inflater.inflate(R.layout.fragment_browse_books, container, false)
+        val textView: TextView = root.findViewById(R.id.text_browse_books)
+        manageAdminsViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })
         return root

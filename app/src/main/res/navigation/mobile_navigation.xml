@@ -25,6 +25,16 @@
     <fragment
         android:id="@+id/nav_browse_books"
         android:name="com.example.bibliotecabl.ui.browsebooks.BrowseBooksFragment"
-        android:label="@string/menu_settings"
-        tools:layout="@layout/fragmen_browse_books" />
+        android:label="@string/menu_books"
+        tools:layout="@layout/fragment_browse_books" />
+    <fragment
+        android:id="@+id/nav_add_books"
+        android:name="com.example.bibliotecabl.ui.addbooks.AddBooksFragment"
+        android:label="@string/menu_add_books"
+        tools:layout="@layout/fragment_add_books" />
+    <fragment
+        android:id="@+id/nav_manage_admins"
+        android:name="com.example.bibliotecabl.ui.manageadmins.ManageAdminsFragment"
+        android:label="@string/menu_manage_admins"
+        tools:layout="@layout/fragment_manage_admins" />
 </navigation>

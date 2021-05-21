@@ -33,6 +33,8 @@
     <string name="menu_rentals">Prenotazioni</string>
     <string name="menu_settings">Impostazioni account</string>
     <string name="menu_books">Sfoglia Libri</string>
+    <string name="menu_add_books">Aggiungi Libro</string>
+    <string name="menu_manage_admins">Modifica Admin</string>
 
 
 </resources>
