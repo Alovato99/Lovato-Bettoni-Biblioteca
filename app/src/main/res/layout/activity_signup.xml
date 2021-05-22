@@ -71,8 +71,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="checkSignUp"
-        android:text="@string/registerText"
-        app:backgroundTint="@color/blueLink" />/>
+        android:text="@string/menu_settings_confirm"
+        app:backgroundTint="@color/blueLink" />
 
     <TextView
         android:id="@+id/loginTextView"

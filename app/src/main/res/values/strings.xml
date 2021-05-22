@@ -32,6 +32,13 @@
     <string name="menu_home">Home</string>
     <string name="menu_rentals">Prenotazioni</string>
     <string name="menu_settings">Impostazioni account</string>
+    <string name="menu_settings_title">Modifica le impostazioni del tuo account</string>
+    <string name="menu_settings_confirm">Conferma</string>
+
+    <string name="new_password">Nuova password</string>
+    <string name="repeat_new_password">Ripeti nuova password</string>
+    <string name="old_password">Vecchia password</string>
+
     <string name="menu_books">Sfoglia Libri</string>
     <string name="menu_add_books">Aggiungi Libro</string>
     <string name="menu_manage_admins">Modifica Admin</string>

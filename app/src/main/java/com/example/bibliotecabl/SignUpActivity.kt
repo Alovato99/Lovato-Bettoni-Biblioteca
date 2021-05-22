@@ -87,8 +87,8 @@ class SignUpActivity : AppCompatActivity() {
             nameEditText.setError(getString(R.string.invalidName))
             error = true
         }
-        val surnamename: String = nameEditText.getText().toString()
-        if(checker.isInvalidNameOrSurname(surnamename))
+        val surname: String = nameEditText.getText().toString()
+        if(checker.isInvalidNameOrSurname(surname))
         {
             surnameEditText.setError(getString(R.string.invalidSurname))
             error = true
