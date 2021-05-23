@@ -1,6 +1,8 @@
 package com.example.bibliotecabl.ui.settings
 
 import android.content.ContentValues.TAG
+import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import android.provider.ContactsContract
 import android.util.Log
@@ -9,11 +11,11 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.bibliotecabl.R
-import com.example.bibliotecabl.fieldChecker
+import com.example.bibliotecabl.*
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
@@ -25,7 +27,9 @@ import kotlinx.android.synthetic.main.activity_signup.*
 import kotlinx.android.synthetic.main.activity_signup.nameEditText
 import kotlinx.android.synthetic.main.activity_signup.surnameEditText
 import kotlinx.android.synthetic.main.fragment_settings.*
+import kotlinx.android.synthetic.main.nav_header_main.*
 import java.net.Authenticator
+import java.net.ContentHandler
 
 class SettingsFragment : Fragment() {
 
@@ -72,7 +76,7 @@ class SettingsFragment : Fragment() {
         return root
     }
 
-    fun checkConfirm(v: View?) {
+    private fun checkConfirm(v: View?) {
         var error: Boolean = false
 
         name = nameEditText.getText().toString()
@@ -81,7 +85,7 @@ class SettingsFragment : Fragment() {
             nameEditText.setError(getString(R.string.invalidName))
             error = true
         }
-        surname = nameEditText.getText().toString()
+        surname = surnameEditText.getText().toString()
         if(checker.isInvalidNameOrSurname(surname))
         {
             surnameEditText.setError(getString(R.string.invalidSurname))
@@ -156,11 +160,35 @@ class SettingsFragment : Fragment() {
     }
     private fun commitChanges()
     {
-        currentUser?.updatePassword(newPwd)?.addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                Log.d(TAG,"Password aggiornata")
+        /*val admin=database.child("Users").child(uid).child("admin").get().toString().trim().toBoolean()
+        val user = User(name, surname,admin)
+        //Cambio nome
+        database.child("Users").child(uid).setValue(user)*/
+
+        val userMap = HashMap<String, Any>()
+        //Cambio nome
+        userMap["name"]=name
+        database.child("Users").child(uid).updateChildren(userMap)
+
+        //Cambio conome
+        userMap["surname"]=surname
+        database.child("Users").child(uid).updateChildren(userMap)
+
+        //Cambio email
+        currentUser?.updateEmail(email)
+
+        //Cambio password se inserita
+        if(!pwdEmpty)
+        {
+            currentUser?.updatePassword(newPwd)?.addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    Log.d(TAG, "Password aggiornata")
+                }
             }
         }
+
+        /*val modifier=HomeActivity()
+        modifier.updateInformation("$name $surname",email)*/
         
     }
 

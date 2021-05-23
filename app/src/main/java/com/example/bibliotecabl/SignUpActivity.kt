@@ -110,7 +110,7 @@ class SignUpActivity : AppCompatActivity() {
                     Log.d(TAG, "createUserWithEmail:success")
                     val currentUser = auth.currentUser
                     val uid = currentUser!!.uid
-                    val database = FirebaseDatabase.getInstance().getReference("Users").child(uid)
+                    val database = FirebaseDatabase.getInstance().getReference("Users")
                     /*userMap["name"] = name
                     database.setValue(userMap)
                     userMap["surname"] = surname
@@ -139,13 +139,13 @@ class SignUpActivity : AppCompatActivity() {
                     })*/
 
 
-                    val database2 = FirebaseDatabase.getInstance().getReference("Users")
-                    database2.addListenerForSingleValueEvent(object : ValueEventListener {
+                    /*val database2 = FirebaseDatabase.getInstance().getReference("Users")*/
+                    database.addListenerForSingleValueEvent(object : ValueEventListener {
                         override fun onDataChange(dataSnapshot: DataSnapshot) {
                             val counter = dataSnapshot.childrenCount.toInt()
                             //userMap["admin"] = (counter==1).toString()
                             val user = User(name, surname, (counter==0))
-                            database.setValue(user).addOnCompleteListener { task ->
+                            database.child(uid).setValue(user).addOnCompleteListener { task ->
                                 if (task.isSuccessful) {
                                     val intent = Intent(applicationContext, LoginActivity::class.java)
                                     startActivity(intent)
@@ -179,5 +179,3 @@ class SignUpActivity : AppCompatActivity() {
 
     }
 }
-
-class User (val name: String, val surname: String, val admin: Boolean)
