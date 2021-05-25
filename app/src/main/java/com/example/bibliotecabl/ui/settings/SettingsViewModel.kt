@@ -36,8 +36,10 @@ class SettingsViewModel : ViewModel() {
         value=auth.currentUser?.email.toString()
     }
 
+
     val textName: LiveData<String> = _textName
     val textSurname: LiveData<String> = _textSurname
     val textEmail: LiveData<String> = _textEmail
+
 
 }

@@ -17,6 +17,9 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -29,6 +32,7 @@ class HomeActivity : AppCompatActivity() {
     private lateinit var auth: FirebaseAuth
     private lateinit var appBarConfiguration: AppBarConfiguration
     private var completeName: String =""
+    private val database = Firebase.database.reference
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +42,6 @@ class HomeActivity : AppCompatActivity() {
 
         val currentUser = auth.currentUser
         val uid = currentUser!!.uid
-        val database = Firebase.database.reference
 
 
         val toolbar: Toolbar = findViewById(R.id.toolbar)
@@ -155,10 +158,38 @@ class HomeActivity : AppCompatActivity() {
         homeEmail.setText(auth.currentUser?.email.toString())
 
 
+        val ref=FirebaseDatabase.getInstance().reference.child("Users")
+        val childEventListener = object:ChildEventListener
+        {
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+            }
+
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+
+                completeName=snapshot.child("name").value.toString()+" "+snapshot.child("surname").value.toString()
+                homeName.setText(completeName)
+                homeEmail.setText(auth.currentUser?.email.toString())
+            }
+
+            override fun onChildRemoved(snapshot: DataSnapshot) {
+            }
+
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+
+        }
+        ref.addChildEventListener(childEventListener)
+
+
+
+
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
 
     }
-    fun updateInformation(fullname:String,email:String)
+    /*fun updateInformation(fullname:String,email:String)
     {
         Toast.makeText(
                 baseContext, R.string.accountAlreadyExists,
@@ -166,5 +197,5 @@ class HomeActivity : AppCompatActivity() {
         ).show()
         homeName.setText(fullname)
         homeEmail.setText(email)
-    }
+    }*/
 }

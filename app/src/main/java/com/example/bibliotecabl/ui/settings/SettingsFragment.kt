@@ -1,10 +1,7 @@
 package com.example.bibliotecabl.ui.settings
 
 import android.content.ContentValues.TAG
-import android.content.Context
-import android.content.Intent
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -21,15 +18,12 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_login.emailEditText
-import kotlinx.android.synthetic.main.activity_signup.*
 import kotlinx.android.synthetic.main.activity_signup.nameEditText
 import kotlinx.android.synthetic.main.activity_signup.surnameEditText
 import kotlinx.android.synthetic.main.fragment_settings.*
 import kotlinx.android.synthetic.main.nav_header_main.*
-import java.net.Authenticator
-import java.net.ContentHandler
+import kotlinx.android.synthetic.main.nav_header_main.view.*
 
 class SettingsFragment : Fragment() {
 
@@ -61,6 +55,7 @@ class SettingsFragment : Fragment() {
         val textViewSurname: TextView = root.findViewById(R.id.surnameEditText)
         val textViewEmail: TextView = root.findViewById(R.id.emailEditText)
         val confirm: Button = root.findViewById(R.id.confirmButton)
+
         settingsViewModel.textName.observe(viewLifecycleOwner, Observer {
             textViewName.text = it
         })
@@ -70,6 +65,7 @@ class SettingsFragment : Fragment() {
         settingsViewModel.textEmail.observe(viewLifecycleOwner, Observer {
             textViewEmail.text = it
         })
+
         confirm.setOnClickListener {
             checkConfirm(it)
         }
@@ -173,6 +169,7 @@ class SettingsFragment : Fragment() {
         //Cambio conome
         userMap["surname"]=surname
         database.child("Users").child(uid).updateChildren(userMap)
+        //root.homeName.text = "$name $surname"
 
         //Cambio email
         currentUser?.updateEmail(email)
@@ -186,7 +183,10 @@ class SettingsFragment : Fragment() {
                 }
             }
         }
-
+       /*Toast.makeText(
+                root.context, R.string.accountAlreadyExists,
+                Toast.LENGTH_SHORT
+        ).show()*/
         /*val modifier=HomeActivity()
         modifier.updateInformation("$name $surname",email)*/
         
