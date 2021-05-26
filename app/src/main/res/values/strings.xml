@@ -22,7 +22,7 @@
     <string name="submit">Invia</string>
     <string name="authenticationFailed">Email o password non valida</string>
     <string name="accountAlreadyExists">Registrazione fallita. Esiste già un\'account registrato con la seguente email</string>
-
+    <string name="logout">Logout</string>
 
 
 
@@ -31,7 +31,7 @@
 
     <string name="menu_home">Home</string>
     <string name="menu_rentals">Prenotazioni</string>
-    <string name="menu_settings">Impostazioni account</string>
+    <string name="menu_settings">Impostazioni</string>
     <string name="menu_settings_title">Modifica le impostazioni del tuo account</string>
     <string name="menu_settings_confirm">Conferma</string>
 
@@ -42,6 +42,8 @@
     <string name="menu_books">Sfoglia Libri</string>
     <string name="menu_add_books">Aggiungi Libro</string>
     <string name="menu_manage_admins">Modifica Admin</string>
+    <string name="addAdmin">Inserisci l\'indirizzo email dell\'account che vuoi far diventare admin</string>
+    <string name="removeAdmin">Inserisci l\'indirizzo email dell\'account che vuoi togliere il ruolo di admin</string>
 
 
 </resources>

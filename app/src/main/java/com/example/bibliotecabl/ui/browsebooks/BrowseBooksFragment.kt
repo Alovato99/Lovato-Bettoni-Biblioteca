@@ -22,7 +22,7 @@ class BrowseBooksFragment: Fragment() {
         browseBooksViewModel =
                 ViewModelProvider(this).get(BrowseBooksViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_manage_admins, container, false)
-        val textView: TextView = root.findViewById(R.id.text_manage_admins)
+        val textView: TextView = root.findViewById(R.id.text_browse_books)
         browseBooksViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
         })

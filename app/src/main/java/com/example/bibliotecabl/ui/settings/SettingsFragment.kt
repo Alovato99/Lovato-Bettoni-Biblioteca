@@ -55,7 +55,6 @@ class SettingsFragment : Fragment() {
         val textViewSurname: TextView = root.findViewById(R.id.surnameEditText)
         val textViewEmail: TextView = root.findViewById(R.id.emailEditText)
         val confirm: Button = root.findViewById(R.id.confirmButton)
-
         settingsViewModel.textName.observe(viewLifecycleOwner, Observer {
             textViewName.text = it
         })
@@ -65,7 +64,11 @@ class SettingsFragment : Fragment() {
         settingsViewModel.textEmail.observe(viewLifecycleOwner, Observer {
             textViewEmail.text = it
         })
-
+        /*name= database.child("Users").child(uid).child("name").get().toString()
+        surname=database.child("Users").child(uid).child("surname").get().toString()
+        textViewName.text=name
+        textViewSurname.text=surname
+        textViewEmail.text=auth.currentUser?.email.toString()*/
         confirm.setOnClickListener {
             checkConfirm(it)
         }

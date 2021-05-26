@@ -4,6 +4,7 @@ import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
 import androidx.appcompat.widget.Toolbar
@@ -198,4 +199,18 @@ class HomeActivity : AppCompatActivity() {
         homeName.setText(fullname)
         homeEmail.setText(email)
     }*/
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        menuInflater.inflate(R.menu.activity_main_logout, menu)
+        return true
+    }
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+
+        if (item.itemId == R.id.action_logout) {
+            auth.signOut()
+            finish()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
 }
