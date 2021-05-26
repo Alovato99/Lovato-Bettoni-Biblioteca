@@ -3,6 +3,7 @@ package com.example.bibliotecabl
 import android.content.Intent
 import android.os.Bundle
 import android.os.health.UidHealthStats
+import android.provider.ContactsContract
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -137,8 +138,6 @@ class SignUpActivity : AppCompatActivity() {
                         override fun onChildMoved(dataSnapshot: DataSnapshot, s: String?) {}
                         override fun onCancelled(databaseError: DatabaseError) {}
                     })*/
-
-
                     /*val database2 = FirebaseDatabase.getInstance().getReference("Users")*/
                     database.addListenerForSingleValueEvent(object : ValueEventListener {
                         override fun onDataChange(dataSnapshot: DataSnapshot) {
@@ -150,6 +149,21 @@ class SignUpActivity : AppCompatActivity() {
                                     val intent = Intent(applicationContext, LoginActivity::class.java)
                                     startActivity(intent)
                                     finish()
+                                }
+                            }
+                        }
+
+                        override fun onCancelled(databaseError: DatabaseError) {}
+                    })
+
+
+
+                    val emailToUidReference = FirebaseDatabase.getInstance().getReference("emailToUID")
+                    emailToUidReference.addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(dataSnapshot: DataSnapshot) {
+                            emailToUidReference.child(email.replace(".", ",")).setValue(uid).addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    Log.d("emailToUid", "Added reference email to uid")
                                 }
                             }
                         }
@@ -179,3 +193,5 @@ class SignUpActivity : AppCompatActivity() {
 
     }
 }
+
+class emailToUID(val email: String, val uid: String)
