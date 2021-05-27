@@ -6,107 +6,90 @@
     android:layout_height="match_parent"
     android:layout_marginTop="25dp"
     android:layout_marginBottom="25dp"
+    android:padding="12dp"
     tools:context="ui.addbooks.AddBooksFragment">
-
-    <TextView
-        android:id="@+id/textView6"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/teko_semibold"
-        android:gravity="center"
-        android:text="@string/bookCover"
-        android:textColor="@color/black"
-        android:textSize="25sp"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:layout_editor_absoluteX="-53dp" />
 
     <ImageView
         android:id="@+id/imageIcon"
         android:layout_width="99dp"
         android:layout_height="144dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="57dp"
         android:layout_weight="1"
+        android:background="#BAB5B5"
         android:onClick="selectImage"
-        app:layout_constraintBottom_toTopOf="@+id/textView2"
+        app:layout_constraintBottom_toTopOf="@+id/editTextTextMultiLine"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.147"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView6" />
-
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/teko_semibold"
-        android:gravity="center"
-        android:text="@string/bookTitle"
-        android:textColor="@color/black"
-        android:textSize="25sp"
-        app:layout_constraintBottom_toTopOf="@+id/nameEditText"
-        tools:layout_editor_absoluteX="49dp" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/nameEditText"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="52dp"
+        android:layout_marginEnd="40dp"
+        android:layout_marginRight="40dp"
         android:ems="10"
         android:hint="@string/signupName"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/textView3"
-        tools:layout_editor_absoluteX="0dp" />
-
-    <TextView
-        android:id="@+id/textView3"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/teko_semibold"
-        android:gravity="center"
-        android:text="@string/bookAuthor"
-        android:textColor="@color/black"
-        android:textSize="25sp"
-        app:layout_constraintBottom_toTopOf="@+id/surnameEditText"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/imageIcon"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
         android:id="@+id/surnameEditText"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="20dp"
+        android:layout_marginStart="15dp"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="@string/signupSurname"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/textView4"
-        tools:layout_editor_absoluteX="16dp" />
-
-    <TextView
-        android:id="@+id/textView4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/teko_semibold"
-        android:gravity="center"
-        android:text="@string/bookDescription"
-        android:textColor="@color/black"
-        android:textSize="25sp"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTextMultiLine"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toEndOf="@+id/imageIcon"
+        app:layout_constraintTop_toBottomOf="@+id/nameEditText" />
 
     <EditText
         android:id="@+id/editTextTextMultiLine"
         android:layout_width="match_parent"
         android:layout_height="173dp"
-        android:layout_marginBottom="20dp"
+        android:layout_marginBottom="68dp"
         android:ems="10"
         android:gravity="start|top"
+        android:hint="\n\n\n\n\n\nDescrizione"
         android:inputType="textMultiLine"
+        android:background="@drawable/multi_text_rectangle"
         app:layout_constraintBottom_toTopOf="@+id/addBookButton"
-        tools:layout_editor_absoluteX="16dp" />
+        app:layout_constraintTop_toBottomOf="@+id/surnameEditText"
+        app:layout_constraintVertical_bias="0.708"
+        tools:layout_editor_absoluteX="12dp" />
 
     <Button
         android:id="@+id/addBookButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="104dp"
         android:text="@string/addBook"
         app:backgroundTint="@color/blueLink"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="0dp" />
+        tools:layout_editor_absoluteX="12dp" />
+
+    <TextView
+        android:id="@+id/select_photo_button"
+        android:layout_width="75dp"
+        android:layout_height="51dp"
+        android:text="Seleziona\n     Foto"
+        app:layout_constraintBottom_toBottomOf="@+id/imageIcon"
+        app:layout_constraintEnd_toEndOf="@+id/imageIcon"
+        app:layout_constraintStart_toStartOf="@+id/imageIcon"
+        app:layout_constraintTop_toTopOf="@+id/imageIcon"
+        app:layout_constraintVertical_bias="0.548" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

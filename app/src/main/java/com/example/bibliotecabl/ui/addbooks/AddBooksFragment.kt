@@ -3,9 +3,6 @@ package com.example.bibliotecabl.ui.addbooks
 import android.app.Activity
 import android.content.ContentValues.TAG
 import android.content.Intent
-import android.database.Cursor
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
 import android.provider.MediaStore
@@ -14,9 +11,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.ImageView
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import com.example.bibliotecabl.R
+import kotlinx.android.synthetic.main.fragment_add_books.*
 
 
 class AddBooksFragment: Fragment() {
@@ -33,7 +31,7 @@ class AddBooksFragment: Fragment() {
         /*addBooksViewModel =
                 ViewModelProvider(this).get(AddBooksViewModel::class.java)*/
         val root = inflater.inflate(R.layout.fragment_add_books, container, false)
-        val addCover:Button=root.findViewById(R.id.imageIcon)
+        val addCover:TextView=root.findViewById(R.id.select_photo_button)
         /*val textView: TextView = root.findViewById(R.id.text_add_books)
         addBooksViewModel.text.observe(viewLifecycleOwner, Observer {
             textView.text = it
@@ -58,11 +56,11 @@ class AddBooksFragment: Fragment() {
 
             selectedPhotoUri = data.data
 
-            /*val bitmap = MediaStore.Images.Media.getBitmap(contentResolver, selectedPhotoUri)
+            val bitmap = MediaStore.Images.Media.getBitmap(activity?.contentResolver, selectedPhotoUri)
 
-            selectphoto_imageview_register.setImageBitmap(bitmap)
+            imageIcon.setImageBitmap(bitmap)
 
-            selectphoto_button_register.alpha = 0f*/
+            select_photo_button.alpha = 0f
         }
     }
 
