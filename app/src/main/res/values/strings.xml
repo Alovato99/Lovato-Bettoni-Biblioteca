@@ -45,5 +45,13 @@
     <string name="addAdmin">Inserisci l\'indirizzo email dell\'account che vuoi far diventare admin</string>
     <string name="removeAdmin">Inserisci l\'indirizzo email dell\'account che vuoi togliere il ruolo di admin</string>
 
+    <string name="bookCover">Copertina</string>
+    <string name="bookTitle">Titolo</string>
+    <string name="bookAuthor">Autore</string>
+    <string name="bookDescription">Descrizione</string>
+    <string name="addBook">Aggiungi</string>
+
+
+
 
 </resources>

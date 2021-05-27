@@ -1,25 +1,112 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.addbooks.AddBooksFragment">
+    android:layout_marginTop="25dp"
+    android:layout_marginBottom="25dp"
+    tools:context="ui.addbooks.AddBooksFragment">
 
     <TextView
-        android:id="@+id/text_add_books"
+        android:id="@+id/textView6"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:fontFamily="@font/teko_semibold"
+        android:gravity="center"
+        android:text="@string/bookCover"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_editor_absoluteX="-53dp" />
+
+    <ImageView
+        android:id="@+id/imageIcon"
+        android:layout_width="99dp"
+        android:layout_height="144dp"
+        android:layout_weight="1"
+        android:onClick="selectImage"
+        app:layout_constraintBottom_toTopOf="@+id/textView2"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:gravity="center_horizontal" />
+        app:layout_constraintTop_toBottomOf="@+id/textView6" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/teko_semibold"
+        android:gravity="center"
+        android:text="@string/bookTitle"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/nameEditText"
+        tools:layout_editor_absoluteX="49dp" />
+
+    <EditText
+        android:id="@+id/nameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:ems="10"
+        android:hint="@string/signupName"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/textView3"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/teko_semibold"
+        android:gravity="center"
+        android:text="@string/bookAuthor"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/surnameEditText"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <EditText
+        android:id="@+id/surnameEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="20dp"
+        android:ems="10"
+        android:hint="@string/signupSurname"
+        android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/textView4"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <TextView
+        android:id="@+id/textView4"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/teko_semibold"
+        android:gravity="center"
+        android:text="@string/bookDescription"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        app:layout_constraintBottom_toTopOf="@+id/editTextTextMultiLine"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <EditText
+        android:id="@+id/editTextTextMultiLine"
+        android:layout_width="match_parent"
+        android:layout_height="173dp"
+        android:layout_marginBottom="20dp"
+        android:ems="10"
+        android:gravity="start|top"
+        android:inputType="textMultiLine"
+        app:layout_constraintBottom_toTopOf="@+id/addBookButton"
+        tools:layout_editor_absoluteX="16dp" />
+
+    <Button
+        android:id="@+id/addBookButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/addBook"
+        app:backgroundTint="@color/blueLink"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="0dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

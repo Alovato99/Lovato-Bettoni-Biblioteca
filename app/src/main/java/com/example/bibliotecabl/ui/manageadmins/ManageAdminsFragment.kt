@@ -46,15 +46,32 @@ class ManageAdminsFragment: Fragment() {
 
 //        database.child("Users" ).
 //
-        database.child("emailToUID").child("bbbb@bbb,bb").get().addOnSuccessListener {
-            Log.d("READING_EMAIL_TO_UID", it.getValue() as String)
-            val userMap = HashMap<String, Any>()
-            userMap["admin"] = true
-            database.child("Users").child(it.getValue() as String).updateChildren(userMap)
+        addAdminButton.setOnClickListener()
+        {
+            database.child("emailToUID").child(addAdminText.text.toString().replace(".",",")).get().addOnSuccessListener {
+                Log.d("READING_EMAIL_TO_UID", it.getValue() as String)
+                val userMap = HashMap<String, Any>()
+                userMap["admin"] = true
+                database.child("Users").child(it.getValue() as String).updateChildren(userMap)
 
 
-        }.addOnFailureListener{
-            Log.d("READING_EMAIL_TO_UID", "FAIL")
+            }.addOnFailureListener{
+                Log.d("READING_EMAIL_TO_UID", "FAIL")
+            }
+        }
+
+        removeAdminButton.setOnClickListener()
+        {
+            database.child("emailToUID").child(removeAdminText.text.toString().replace(".",",")).get().addOnSuccessListener {
+                Log.d("READING_EMAIL_TO_UID", it.getValue() as String)
+                val userMap = HashMap<String, Any>()
+                userMap["admin"] = false
+                database.child("Users").child(it.getValue() as String).updateChildren(userMap)
+
+
+            }.addOnFailureListener{
+                Log.d("READING_EMAIL_TO_UID", "FAIL")
+            }
         }
 
 
