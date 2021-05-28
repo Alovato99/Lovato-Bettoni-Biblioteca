@@ -42,8 +42,8 @@
     <string name="menu_books">Sfoglia Libri</string>
     <string name="menu_add_books">Aggiungi Libro</string>
     <string name="menu_manage_admins">Modifica Admin</string>
-    <string name="addAdmin">Inserisci l\'indirizzo email dell\'account che vuoi far diventare admin</string>
-    <string name="removeAdmin">Inserisci l\'indirizzo email dell\'account che vuoi togliere il ruolo di admin</string>
+    <string name="addAdmin">Inserisci l\'email dell\'account che vuoi far diventare admin</string>
+    <string name="removeAdmin">Inserisci l\'email dell\'account che vuoi togliere il ruolo di admin</string>
 
     <string name="bookCover">Copertina</string>
     <string name="bookTitle">Titolo</string>

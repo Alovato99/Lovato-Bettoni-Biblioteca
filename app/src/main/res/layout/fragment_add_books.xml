@@ -13,14 +13,14 @@
         android:id="@+id/imageIcon"
         android:layout_width="99dp"
         android:layout_height="144dp"
-        android:layout_marginTop="32dp"
-        android:layout_marginBottom="57dp"
+        android:layout_marginEnd="12dp"
+        android:layout_marginRight="12dp"
+        android:layout_marginBottom="75dp"
         android:layout_weight="1"
         android:background="#BAB5B5"
         android:onClick="selectImage"
-        app:layout_constraintBottom_toTopOf="@+id/editTextTextMultiLine"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.147"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -28,68 +28,95 @@
         android:id="@+id/nameEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="52dp"
-        android:layout_marginEnd="40dp"
-        android:layout_marginRight="40dp"
+        android:layout_marginTop="12dp"
         android:ems="10"
-        android:hint="@string/signupName"
+        android:hint="@string/bookTitle"
         android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/surnameEditText"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/imageIcon"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.467" />
 
     <EditText
         android:id="@+id/surnameEditText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginBottom="64dp"
         android:ems="10"
-        android:hint="@string/signupSurname"
+        android:hint="@string/bookAuthor"
         android:inputType="textPersonName"
+        app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/imageIcon"
-        app:layout_constraintTop_toBottomOf="@+id/nameEditText" />
+        app:layout_constraintStart_toStartOf="@+id/guideline2" />
 
     <EditText
         android:id="@+id/editTextTextMultiLine"
         android:layout_width="match_parent"
         android:layout_height="173dp"
-        android:layout_marginBottom="68dp"
+        android:layout_marginTop="75dp"
+        android:layout_marginBottom="90dp"
         android:ems="10"
         android:gravity="start|top"
-        android:hint="\n\n\n\n\n\nDescrizione"
-        android:inputType="textMultiLine"
         android:background="@drawable/multi_text_rectangle"
+        android:hint="Descrizione"
+        android:inputType="textMultiLine"
         app:layout_constraintBottom_toTopOf="@+id/addBookButton"
-        app:layout_constraintTop_toBottomOf="@+id/surnameEditText"
-        app:layout_constraintVertical_bias="0.708"
-        tools:layout_editor_absoluteX="12dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
     <Button
         android:id="@+id/addBookButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="104dp"
         android:text="@string/addBook"
         app:backgroundTint="@color/blueLink"
         app:layout_constraintBottom_toBottomOf="parent"
-        tools:layout_editor_absoluteX="12dp" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/select_photo_button"
-        android:layout_width="75dp"
-        android:layout_height="51dp"
-        android:text="Seleziona\n     Foto"
+        android:layout_width="99dp"
+        android:layout_height="144dp"
+        android:text="\n\n\n     Seleziona\n          Foto"
         app:layout_constraintBottom_toBottomOf="@+id/imageIcon"
         app:layout_constraintEnd_toEndOf="@+id/imageIcon"
         app:layout_constraintStart_toStartOf="@+id/imageIcon"
         app:layout_constraintTop_toTopOf="@+id/imageIcon"
         app:layout_constraintVertical_bias="0.548" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top"
+        app:constraint_referenced_ids="guideline3"
+        tools:layout_editor_absoluteX="12dp"
+        tools:layout_editor_absoluteY="669dp" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="left"
+        app:constraint_referenced_ids="guideline2"
+        tools:layout_editor_absoluteX="399dp"
+        tools:layout_editor_absoluteY="12dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_percent="0.4"/>
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_percent="0.5"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
