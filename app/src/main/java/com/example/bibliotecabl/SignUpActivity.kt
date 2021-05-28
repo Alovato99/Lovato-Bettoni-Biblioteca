@@ -2,8 +2,6 @@ package com.example.bibliotecabl
 
 import android.content.Intent
 import android.os.Bundle
-import android.os.health.UidHealthStats
-import android.provider.ContactsContract
 import android.util.Log
 import android.view.View
 import android.widget.Toast
@@ -12,7 +10,6 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
-import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_signup.*
 import kotlinx.android.synthetic.main.activity_signup.emailEditText
 import kotlinx.android.synthetic.main.activity_signup.passwordEditText
@@ -42,8 +39,8 @@ class SignUpActivity : AppCompatActivity() {
     private fun onSignUp() {
         val email = emailEditText.text.toString().trim()
         val password = passwordEditText.text.toString().trim()
-        val name = nameEditText.text.toString().trim()
-        val surname = surnameEditText.text.toString().trim()
+        val name = bookTitleEditText.text.toString().trim()
+        val surname = bookAuthorEditText.text.toString().trim()
         createUser(name, surname, email, password)
 
     }
@@ -82,16 +79,16 @@ class SignUpActivity : AppCompatActivity() {
         }
 
 
-        val name: String = nameEditText.getText().toString()
+        val name: String = bookTitleEditText.getText().toString()
         if(checker.isInvalidNameOrSurname(name))
         {
-            nameEditText.setError(getString(R.string.invalidName))
+            bookTitleEditText.setError(getString(R.string.invalidName))
             error = true
         }
-        val surname: String = nameEditText.getText().toString()
+        val surname: String = bookTitleEditText.getText().toString()
         if(checker.isInvalidNameOrSurname(surname))
         {
-            surnameEditText.setError(getString(R.string.invalidSurname))
+            bookAuthorEditText.setError(getString(R.string.invalidSurname))
             error = true
         }
 

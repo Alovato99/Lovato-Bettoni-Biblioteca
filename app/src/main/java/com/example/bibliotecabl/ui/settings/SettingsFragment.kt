@@ -8,7 +8,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
@@ -19,11 +18,9 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlinx.android.synthetic.main.activity_login.emailEditText
-import kotlinx.android.synthetic.main.activity_signup.nameEditText
-import kotlinx.android.synthetic.main.activity_signup.surnameEditText
+import kotlinx.android.synthetic.main.activity_signup.bookTitleEditText
+import kotlinx.android.synthetic.main.activity_signup.bookAuthorEditText
 import kotlinx.android.synthetic.main.fragment_settings.*
-import kotlinx.android.synthetic.main.nav_header_main.*
-import kotlinx.android.synthetic.main.nav_header_main.view.*
 
 class SettingsFragment : Fragment() {
 
@@ -51,8 +48,8 @@ class SettingsFragment : Fragment() {
         settingsViewModel =
                 ViewModelProvider(this).get(SettingsViewModel::class.java)
         val root = inflater.inflate(R.layout.fragment_settings, container, false)
-        val textViewName: TextView = root.findViewById(R.id.nameEditText)
-        val textViewSurname: TextView = root.findViewById(R.id.surnameEditText)
+        val textViewName: TextView = root.findViewById(R.id.bookTitleEditText)
+        val textViewSurname: TextView = root.findViewById(R.id.bookAuthorEditText)
         val textViewEmail: TextView = root.findViewById(R.id.emailEditText)
         val confirm: Button = root.findViewById(R.id.confirmButton)
         settingsViewModel.textName.observe(viewLifecycleOwner, Observer {
@@ -78,16 +75,16 @@ class SettingsFragment : Fragment() {
     private fun checkConfirm(v: View?) {
         var error: Boolean = false
 
-        name = nameEditText.getText().toString()
+        name = bookTitleEditText.getText().toString()
         if(checker.isInvalidNameOrSurname(name))
         {
-            nameEditText.setError(getString(R.string.invalidName))
+            bookTitleEditText.setError(getString(R.string.invalidName))
             error = true
         }
-        surname = surnameEditText.getText().toString()
+        surname = bookAuthorEditText.getText().toString()
         if(checker.isInvalidNameOrSurname(surname))
         {
-            surnameEditText.setError(getString(R.string.invalidSurname))
+            bookAuthorEditText.setError(getString(R.string.invalidSurname))
             error = true
         }
         email = emailEditText.getText().toString()

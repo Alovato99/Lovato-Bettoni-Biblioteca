@@ -25,30 +25,30 @@
         android:text="@string/AppTitle"
         android:textColor="@color/black"
         android:textSize="44sp"
-        app:layout_constraintBottom_toTopOf="@+id/nameEditText"
+        app:layout_constraintBottom_toTopOf="@+id/bookTitleEditText"
         app:layout_constraintTop_toBottomOf="@+id/imageView"
         tools:layout_editor_absoluteX="0dp" />
 
     <EditText
-        android:id="@+id/nameEditText"
+        android:id="@+id/bookTitleEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="Nome"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/surnameEditText"
+        app:layout_constraintBottom_toTopOf="@+id/bookAuthorEditText"
         app:layout_constraintTop_toBottomOf="@+id/textView"
         tools:layout_editor_absoluteX="0dp" />
 
     <EditText
-        android:id="@+id/surnameEditText"
+        android:id="@+id/bookAuthorEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
         android:hint="@string/signupSurname"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/emailEditText"
-        app:layout_constraintTop_toBottomOf="@+id/nameEditText"
+        app:layout_constraintTop_toBottomOf="@+id/bookTitleEditText"
         tools:layout_editor_absoluteX="16dp" />
 
     <EditText
@@ -59,7 +59,7 @@
         android:hint="@string/emailHint"
         android:inputType="textEmailAddress"
         app:layout_constraintBottom_toTopOf="@+id/passwordEditText"
-        app:layout_constraintTop_toBottomOf="@+id/surnameEditText"
+        app:layout_constraintTop_toBottomOf="@+id/bookAuthorEditText"
         tools:layout_editor_absoluteX="16dp" />
 
     <EditText

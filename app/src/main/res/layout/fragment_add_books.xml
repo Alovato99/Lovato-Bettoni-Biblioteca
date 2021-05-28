@@ -25,33 +25,34 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <EditText
-        android:id="@+id/nameEditText"
+        android:id="@+id/bookTitleEditText"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="12dp"
+        android:layout_height="0dp"
+        android:layout_marginTop="30dp"
         android:ems="10"
         android:hint="@string/bookTitle"
         android:inputType="textPersonName"
-        app:layout_constraintBottom_toTopOf="@+id/surnameEditText"
+        app:layout_constraintBottom_toTopOf="@+id/bookAuthorEditText"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.467" />
 
     <EditText
-        android:id="@+id/surnameEditText"
+        android:id="@+id/bookAuthorEditText"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="64dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="120dp"
         android:ems="10"
         android:hint="@string/bookAuthor"
         android:inputType="textPersonName"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/guideline2" />
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/bookTitleEditText" />
 
     <EditText
-        android:id="@+id/editTextTextMultiLine"
+        android:id="@+id/bookDescEditText"
         android:layout_width="match_parent"
         android:layout_height="173dp"
         android:layout_marginTop="75dp"

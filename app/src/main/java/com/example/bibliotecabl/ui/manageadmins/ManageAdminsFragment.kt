@@ -29,9 +29,6 @@ class ManageAdminsFragment: Fragment() {
             savedInstanceState: Bundle?
     ): View? {
         val database = Firebase.database.reference
-        var auth: FirebaseAuth = Firebase.auth
-        val currentUser = auth.currentUser
-        val uid = currentUser!!.uid
         /*manageAdminsViewModel =
                 ViewModelProvider(this).get(ManageAdminsViewModel::class.java)*/
         val root = inflater.inflate(R.layout.fragment_manage_admins, container, false)

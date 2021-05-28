@@ -26,7 +26,7 @@
         android:textSize="44sp" />
 
     <EditText
-        android:id="@+id/nameEditText"
+        android:id="@+id/bookTitleEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
@@ -34,7 +34,7 @@
         android:inputType="textPersonName" />
 
     <EditText
-        android:id="@+id/surnameEditText"
+        android:id="@+id/bookAuthorEditText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
