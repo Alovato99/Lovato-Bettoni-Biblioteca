@@ -33,7 +33,7 @@ class BrowseBooksFragment: Fragment() {
         }
 
 
-        rclView.layoutManager = LinearLayoutManager(activity?.baseContext, OrientationHelper.HORIZONTAL, false)
+        rclView.layoutManager = LinearLayoutManager(activity?.baseContext, RecyclerView.HORIZONTAL, false)
         rclView.adapter = ItemAdapter(items)
 
         return root
