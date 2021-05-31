@@ -20,6 +20,7 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.fragment_add_books.*
+import java.lang.Integer.parseInt
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -31,6 +32,13 @@ class AddBooksFragment: Fragment() {
 
 
     private var selectedPhotoUri: Uri? = null
+    private var title :String = ""
+    private var author :String = ""
+    private var description :String = ""
+    private var copiesText : String = ""
+    private var copies : Int=0
+    private var bookID : String =""
+    val bookDBReference = FirebaseDatabase.getInstance().getReference("Books")
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -50,7 +58,6 @@ class AddBooksFragment: Fragment() {
         //setContentView(R.layout.activity_test)
 
 
-        val database = Firebase.database.reference
 
         addCover.setOnClickListener()
         {
@@ -73,6 +80,42 @@ class AddBooksFragment: Fragment() {
 
                 override fun onCancelled(databaseError: DatabaseError) {}
             })*/
+            title=bookTitleEditText.text.toString()
+            author=bookAuthorEditText.text.toString()
+            description=bookDescEditText.text.toString()
+            copiesText=copiesEditText.text.toString()
+            bookID=title.replace(" ", "-")+"-"+author.replace(" ", "-") //EXAMPLE: "Rose-Viola-Nicola-Pascoli"
+
+
+
+            //var error=false
+            bookDBReference.child(bookID).get().addOnCompleteListener { task ->
+                if (task.isSuccessful)
+                {
+                    if(copiesText!="" && copiesText!="0")
+                    {
+                        //val actualCopies=parseInt(bookDBReference.child(bookID).child("copies").get().toString())
+                        val userMap = HashMap<String, Any>()
+                        copies = parseInt(copiesText)
+                        userMap["copies"]=copies
+                        bookDBReference.child(bookID).updateChildren(userMap)
+                        if(description!="")
+                            userMap["description"]=description
+                            bookDBReference.child(bookID).updateChildren(userMap)
+
+                    }
+                    else
+                    {
+                        copiesEditText.setError(getString(R.string.copiesEmpty))
+                        //error = true
+                    }
+
+
+                }
+            }
+
+
+
             if (selectedPhotoUri != null) {
                 val filename = UUID.randomUUID().toString()
                 val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
@@ -83,8 +126,7 @@ class AddBooksFragment: Fragment() {
 
                             ref.downloadUrl.addOnSuccessListener {
                                 Log.d(TAG, "File Location: $it")
-
-                                saveBookToFirebaseDatabase(it.toString())
+                                checkAddBook(it.toString())
                             }
                         }
                         .addOnFailureListener {
@@ -94,16 +136,42 @@ class AddBooksFragment: Fragment() {
         }
         return root
     }
+    private fun checkAddBook(bookImageUrl: String)
+    {
+        var error=false
 
-    private fun saveBookToFirebaseDatabase(bookImageUrl: String) {
-        val bookDBReference = FirebaseDatabase.getInstance().getReference("Books")
-        val bookUID = bookTitleEditText.text.toString().replace(" ", "-")+"-"+bookAuthorEditText.text.toString().replace(" ", "-") //EXAMPLE: "Rose-Viola-Nicola-Pascoli"
+        if(title.isEmpty()) {
+            bookTitleEditText.setError(getString(R.string.titleEmpty))
+            error=true
+        }
+        if(author.isEmpty()) {
+            bookAuthorEditText.setError(getString(R.string.authorEmpty))
+            error=true
+        }
+        if(copiesText!="")
+            copies = parseInt(copiesText)
+        else {
+            copiesEditText.setError(getString(R.string.copiesEmpty))
+            error = true
+        }
+        /*try {
+            copies = parseInt(copiesText)
+        }
+        catch (e: NumberFormatException) {
+            copiesEditText.setError(getString(R.string.copiesEmpty))
+            error = true
+        }*/
+        if(error)
+            return
+        saveBookToFirebaseDatabase(bookImageUrl)
+    }
+        private fun saveBookToFirebaseDatabase(bookImageUrl: String) {
         val sdf = SimpleDateFormat("dd/M/yyyy")
         val currentDate = sdf.format(Date())
-        val book = Book(bookTitleEditText.text.toString(), bookAuthorEditText.text.toString(),bookDescEditText.text.toString(), bookImageUrl, currentDate)
+        val book = Book(title, author,description,copies, bookImageUrl, currentDate)
 
 
-        bookDBReference.child(bookUID).setValue(book)
+        bookDBReference.child(bookID).setValue(book)
                 .addOnSuccessListener {
                     Log.d(TAG, "Finally we saved the user to Firebase Database")
                 }
@@ -130,4 +198,4 @@ class AddBooksFragment: Fragment() {
     }
 }
 
-class Book(val title: String, val author: String, val desc: String, val bookImageUrl: String, val currentDate: String)
+class Book(val title: String, val author: String, val desc: String, val copies: Int, val bookImageUrl: String, val currentDate: String)

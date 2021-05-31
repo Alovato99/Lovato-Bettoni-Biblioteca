@@ -50,6 +50,11 @@
     <string name="bookAuthor">Autore</string>
     <string name="bookDescription">Descrizione</string>
     <string name="addBook">Aggiungi</string>
+    <string name="rentBook">Prenota</string>
+    <string name="bookCopies">Copie</string>
+    <string name="titleEmpty">Inserire un titolo</string>
+    <string name="authorEmpty">Inserire un autore</string>
+    <string name="copiesEmpty">Inserire il numero di copie</string>
 
 
 

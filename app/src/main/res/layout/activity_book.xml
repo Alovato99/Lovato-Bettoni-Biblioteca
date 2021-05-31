@@ -17,14 +17,13 @@
         android:layout_marginRight="12dp"
         android:layout_marginBottom="75dp"
         android:layout_weight="1"
-        android:background="#BAB5B5"
         android:onClick="selectImage"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
+    <TextView
         android:id="@+id/bookTitleEditText"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
@@ -38,11 +37,11 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.467" />
 
-    <EditText
+    <TextView
         android:id="@+id/bookAuthorEditText"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
-        android:layout_marginBottom="110dp"
+        android:layout_marginBottom="120dp"
         android:ems="10"
         android:hint="@string/bookAuthor"
         android:inputType="textPersonName"
@@ -51,23 +50,20 @@
         app:layout_constraintStart_toStartOf="@+id/guideline2"
         app:layout_constraintTop_toBottomOf="@+id/bookTitleEditText" />
 
-    <EditText
+    <TextView
         android:id="@+id/copiesEditText"
         android:layout_width="99dp"
-        android:layout_height="0dp"
+        android:layout_height="51dp"
         android:layout_marginEnd="12dp"
         android:layout_marginRight="12dp"
-        android:layout_marginBottom="30dp"
-        android:hint="@string/bookCopies"
+        android:hint="Copie: 0"
         app:layout_constraintBottom_toTopOf="@+id/guideline3"
         app:layout_constraintEnd_toStartOf="@+id/guideline2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/imageIcon"
-        android:inputType= "number"
         app:layout_constraintVertical_bias="0.468" />
 
-
-    <EditText
+    <TextView
         android:id="@+id/bookDescEditText"
         android:layout_width="match_parent"
         android:layout_height="173dp"
@@ -84,25 +80,14 @@
         app:layout_constraintTop_toTopOf="@+id/guideline3" />
 
     <Button
-        android:id="@+id/addBookButton"
+        android:id="@+id/rentButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/addBook"
+        android:text="@string/rentBook"
         app:backgroundTint="@color/blueLink"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/select_photo_button"
-        android:layout_width="99dp"
-        android:layout_height="144dp"
-        android:text="\n\n\n     Seleziona\n          Foto"
-        app:layout_constraintBottom_toBottomOf="@+id/imageIcon"
-        app:layout_constraintEnd_toEndOf="@+id/imageIcon"
-        app:layout_constraintStart_toStartOf="@+id/imageIcon"
-        app:layout_constraintTop_toTopOf="@+id/imageIcon"
-        app:layout_constraintVertical_bias="0.548" />
 
     <androidx.constraintlayout.widget.Barrier
         android:layout_width="wrap_content"
@@ -135,5 +120,7 @@
         android:orientation="horizontal"
         app:layout_constraintGuide_begin="20dp"
         app:layout_constraintGuide_percent="0.5"/>
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
