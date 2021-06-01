@@ -1,4 +1,4 @@
-package com.example.bibliotecabl.ui.settings
+package com.example.bibliotecabl.ui
 
 import android.content.ContentValues.TAG
 import android.os.Bundle
@@ -9,8 +9,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.example.bibliotecabl.*
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuth
@@ -25,7 +23,6 @@ import kotlinx.android.synthetic.main.fragment_settings.*
 class SettingsFragment : Fragment() {
 
     val checker = fieldChecker()
-    private lateinit var settingsViewModel: SettingsViewModel
     private var name=""
     private var surname=""
     private var email=""
@@ -45,27 +42,24 @@ class SettingsFragment : Fragment() {
             container: ViewGroup?,
             savedInstanceState: Bundle?
     ): View? {
-        settingsViewModel =
-                ViewModelProvider(this).get(SettingsViewModel::class.java)
+
         val root = inflater.inflate(R.layout.fragment_settings, container, false)
         val textViewName: TextView = root.findViewById(R.id.bookTitleEditText)
         val textViewSurname: TextView = root.findViewById(R.id.bookAuthorEditText)
         val textViewEmail: TextView = root.findViewById(R.id.emailEditText)
         val confirm: Button = root.findViewById(R.id.confirmButton)
-        settingsViewModel.textName.observe(viewLifecycleOwner, Observer {
-            textViewName.text = it
-        })
-        settingsViewModel.textSurname.observe(viewLifecycleOwner, Observer {
-            textViewSurname.text = it
-        })
-        settingsViewModel.textEmail.observe(viewLifecycleOwner, Observer {
-            textViewEmail.text = it
-        })
-        /*name= database.child("Users").child(uid).child("name").get().toString()
-        surname=database.child("Users").child(uid).child("surname").get().toString()
-        textViewName.text=name
-        textViewSurname.text=surname
-        textViewEmail.text=auth.currentUser?.email.toString()*/
+
+
+        database.child("Users").child(uid).get().addOnSuccessListener {
+            name=it.child("name").getValue().toString()
+            surname=it.child("surname").getValue().toString()
+            textViewName.text=name
+            textViewSurname.text=surname
+            textViewEmail.text=auth.currentUser?.email.toString()
+        }
+
+
+
         confirm.setOnClickListener {
             checkConfirm(it)
         }

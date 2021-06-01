@@ -1,4 +1,4 @@
-package com.example.bibliotecabl.ui.browsebooks
+package com.example.bibliotecabl.ui
 
 import android.os.Bundle
 import android.view.LayoutInflater

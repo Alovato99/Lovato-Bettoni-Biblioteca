@@ -7,24 +7,24 @@
 
     <fragment
         android:id="@+id/nav_home"
-        android:name="com.example.bibliotecabl.ui.home.HomeFragment"
+        android:name="com.example.bibliotecabl.ui.HomeFragment"
         android:label="@string/menu_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/nav_rentals"
-        android:name="com.example.bibliotecabl.ui.rentals.RentalsFragment"
+        android:name="com.example.bibliotecabl.ui.RentalsFragment"
         android:label="@string/menu_rentals"
         tools:layout="@layout/fragment_rentals" />
 
     <fragment
         android:id="@+id/nav_settings"
-        android:name="com.example.bibliotecabl.ui.settings.SettingsFragment"
+        android:name="com.example.bibliotecabl.ui.SettingsFragment"
         android:label="@string/menu_settings"
         tools:layout="@layout/fragment_settings" />
     <fragment
         android:id="@+id/nav_browse_books"
-        android:name="com.example.bibliotecabl.ui.browsebooks.BrowseBooksFragment"
+        android:name="com.example.bibliotecabl.ui.BrowseBooksFragment"
         android:label="@string/menu_books"
         tools:layout="@layout/fragment_browse_books" />
     <fragment
@@ -34,7 +34,7 @@
         tools:layout="@layout/fragment_add_books" />
     <fragment
         android:id="@+id/nav_manage_admins"
-        android:name="com.example.bibliotecabl.ui.manageadmins.ManageAdminsFragment"
+        android:name="com.example.bibliotecabl.ui.ManageAdminsFragment"
         android:label="@string/menu_manage_admins"
         tools:layout="@layout/fragment_manage_admins" />
 </navigation>

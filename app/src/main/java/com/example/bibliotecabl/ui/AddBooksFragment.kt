@@ -27,7 +27,6 @@ import java.util.*
 
 class AddBooksFragment: Fragment() {
 
-    //private lateinit var addBooksViewModel: AddBooksViewModel
     //private val imageView: ImageView? = null
 
 
@@ -38,6 +37,7 @@ class AddBooksFragment: Fragment() {
     private var copiesText : String = ""
     private var copies : Int=0
     private var bookID : String =""
+    private var error=false
     val bookDBReference = FirebaseDatabase.getInstance().getReference("Books")
 
     override fun onCreateView(
@@ -46,8 +46,6 @@ class AddBooksFragment: Fragment() {
             savedInstanceState: Bundle?
     ): View? {
 
-        /*addBooksViewModel =
-                ViewModelProvider(this).get(AddBooksViewModel::class.java)*/
         val root = inflater.inflate(R.layout.fragment_add_books, container, false)
         val addCover : TextView=root.findViewById(R.id.select_photo_button)
         val addBook : Button = root.findViewById(R.id.addBookButton)
@@ -80,65 +78,63 @@ class AddBooksFragment: Fragment() {
 
                 override fun onCancelled(databaseError: DatabaseError) {}
             })*/
-            title=bookTitleEditText.text.toString()
-            author=bookAuthorEditText.text.toString()
-            description=bookDescEditText.text.toString()
-            copiesText=copiesEditText.text.toString()
-            bookID=title.replace(" ", "-")+"-"+author.replace(" ", "-") //EXAMPLE: "Rose-Viola-Nicola-Pascoli"
-
+            title = bookTitleEditText.text.toString()
+            author = bookAuthorEditText.text.toString()
+            description = bookDescEditText.text.toString()
+            copiesText = copiesEditText.text.toString()
+            bookID = title.replace(" ", "-") + "-" + author.replace(" ", "-") //EXAMPLE: "Rose-Viola-Nicola-Pascoli"
 
 
             //var error=false
-            bookDBReference.child(bookID).get().addOnCompleteListener { task ->
-                if (task.isSuccessful)
-                {
-                    if(copiesText!="" && copiesText!="0")
-                    {
-                        //val actualCopies=parseInt(bookDBReference.child(bookID).child("copies").get().toString())
+            bookDBReference.child(bookID).get().addOnSuccessListener {
+                if (it.hasChild("copies")) {
+                    error = true
+                    if (copiesText != "" && copiesText != "0") {
+
+                        var actualCopies = parseInt(it.child("copies").getValue().toString())
                         val userMap = HashMap<String, Any>()
                         copies = parseInt(copiesText)
-                        userMap["copies"]=copies
+                        userMap["copies"] = copies + actualCopies
                         bookDBReference.child(bookID).updateChildren(userMap)
-                        if(description!="")
-                            userMap["description"]=description
-                            bookDBReference.child(bookID).updateChildren(userMap)
+                        if (description != "")
+                            userMap["description"] = description
+                        bookDBReference.child(bookID).updateChildren(userMap)
 
                     }
-                    else
-                    {
-                        copiesEditText.setError(getString(R.string.copiesEmpty))
-                        //error = true
-                    }
-
-
                 }
+            }.addOnFailureListener {
+
+                copiesEditText.setError(getString(R.string.copiesEmpty))
+                //error = true
             }
 
 
 
-            if (selectedPhotoUri != null) {
-                val filename = UUID.randomUUID().toString()
-                val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
 
-                ref.putFile(selectedPhotoUri!!)
-                        .addOnSuccessListener {
-                            Log.d(TAG, "Successfully uploaded image: ${it.metadata?.path}")
+            if (!error) {
+                if (selectedPhotoUri != null) {
+                    val filename = UUID.randomUUID().toString()
+                    val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
 
-                            ref.downloadUrl.addOnSuccessListener {
-                                Log.d(TAG, "File Location: $it")
-                                checkAddBook(it.toString())
+                    ref.putFile(selectedPhotoUri!!)
+                            .addOnSuccessListener {
+                                Log.d(TAG, "Successfully uploaded image: ${it.metadata?.path}")
+
+                                ref.downloadUrl.addOnSuccessListener {
+                                    Log.d(TAG, "File Location: $it")
+                                    checkAddBook(it.toString())
+                                }
                             }
-                        }
-                        .addOnFailureListener {
-                            Log.d(TAG, "Failed to upload image to storage: ${it.message}")
-                        }
+                            .addOnFailureListener {
+                                Log.d(TAG, "Failed to upload image to storage: ${it.message}")
+                            }
+                }
             }
         }
         return root
     }
     private fun checkAddBook(bookImageUrl: String)
     {
-        var error=false
 
         if(title.isEmpty()) {
             bookTitleEditText.setError(getString(R.string.titleEmpty))
