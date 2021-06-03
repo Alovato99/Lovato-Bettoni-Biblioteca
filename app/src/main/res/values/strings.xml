@@ -56,6 +56,17 @@
     <string name="authorEmpty">Inserire un autore</string>
     <string name="copiesEmpty">Inserire il numero di copie</string>
 
+    <string name="informationUpdated">Informazioni aggiornate correttamente</string>
+    <string name="bookAdded">Libro aggiunto correttamente</string>
+    <string name="bookUpdated">Libro aggiornato correttamente</string>
+    <string name="adminAdded">Admin aggiunto correttamente</string>
+    <string name="adminRemoved">Admin rimosso correttamente</string>
+    <string name="emailDoesntExists">Non esiste nessun account associato a quest indirizzo email</string>
+
+    <string name="removeBook">Inserisci il titolo e l\'autore del libro che vuoi rimuovere</string>
+    <string name="menu_remove_books">Rimuovi Libro</string>
+    <string name="bookRemoved">Libro rimosso correttamente</string>
+    <string name="bookNotFound">Non esistono libri con questo titolo e autore</string>
 
 
 

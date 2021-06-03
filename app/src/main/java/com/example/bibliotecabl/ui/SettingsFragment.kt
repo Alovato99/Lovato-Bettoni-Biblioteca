@@ -8,6 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.bibliotecabl.*
 import com.google.firebase.auth.EmailAuthProvider
@@ -177,10 +178,10 @@ class SettingsFragment : Fragment() {
                 }
             }
         }
-       /*Toast.makeText(
-                root.context, R.string.accountAlreadyExists,
+       Toast.makeText(
+                activity, R.string.informationUpdated,
                 Toast.LENGTH_SHORT
-        ).show()*/
+        ).show()
         /*val modifier=HomeActivity()
         modifier.updateInformation("$name $surname",email)*/
         

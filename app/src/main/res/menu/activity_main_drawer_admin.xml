@@ -23,6 +23,9 @@
             android:id="@+id/nav_add_books"
             android:title="@string/menu_add_books" />
         <item
+            android:id="@+id/nav_remove_books"
+            android:title="@string/menu_remove_books" />
+        <item
             android:id="@+id/nav_manage_admins"
             android:title="@string/menu_manage_admins" />
     </group>

@@ -81,8 +81,8 @@ class LoginActivity : AppCompatActivity() {
     }
     private fun loginUser(email: String, password: String)
     {
-        auth.signInWithEmailAndPassword(email, password)
-            .addOnCompleteListener(this) { task ->
+        if(email.isNotEmpty() && password.isNotEmpty()) {
+            auth.signInWithEmailAndPassword(email, password) .addOnCompleteListener(this) { task ->
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Log.d(TAG, "signInWithEmail:success")
@@ -91,9 +91,10 @@ class LoginActivity : AppCompatActivity() {
                 } else {
                     // If sign in fails, display a message to the user.
                     Log.w(TAG, "signInWithEmail:failure", task.exception)
-                    Toast.makeText(baseContext,R.string.authenticationFailed,
-                        Toast.LENGTH_SHORT).show()
+                    Toast.makeText(baseContext, R.string.authenticationFailed,
+                            Toast.LENGTH_SHORT).show()
                 }
             }
+        }
     }
 }

@@ -13,6 +13,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.bibliotecabl.R
 import com.google.firebase.database.FirebaseDatabase
@@ -78,6 +79,7 @@ class AddBooksFragment: Fragment() {
 
                 override fun onCancelled(databaseError: DatabaseError) {}
             })*/
+            error=false
             title = bookTitleEditText.text.toString()
             author = bookAuthorEditText.text.toString()
             description = bookDescEditText.text.toString()
@@ -90,7 +92,7 @@ class AddBooksFragment: Fragment() {
                 if (it.hasChild("copies")) {
                     error = true
                     if (copiesText != "" && copiesText != "0") {
-
+                        error=true
                         var actualCopies = parseInt(it.child("copies").getValue().toString())
                         val userMap = HashMap<String, Any>()
                         copies = parseInt(copiesText)
@@ -99,7 +101,10 @@ class AddBooksFragment: Fragment() {
                         if (description != "")
                             userMap["description"] = description
                         bookDBReference.child(bookID).updateChildren(userMap)
-
+                        Toast.makeText(
+                                activity, R.string.bookUpdated,
+                                Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }.addOnFailureListener {
@@ -107,6 +112,7 @@ class AddBooksFragment: Fragment() {
                 copiesEditText.setError(getString(R.string.copiesEmpty))
                 //error = true
             }
+
 
 
 
@@ -169,7 +175,11 @@ class AddBooksFragment: Fragment() {
 
         bookDBReference.child(bookID).setValue(book)
                 .addOnSuccessListener {
-                    Log.d(TAG, "Finally we saved the user to Firebase Database")
+                    Log.d(TAG, "Book added")
+                    Toast.makeText(
+                            activity, R.string.bookAdded,
+                            Toast.LENGTH_SHORT
+                    ).show()
                 }
                 .addOnFailureListener {
                     Log.d(TAG, "Failed to set value to database: ${it.message}")

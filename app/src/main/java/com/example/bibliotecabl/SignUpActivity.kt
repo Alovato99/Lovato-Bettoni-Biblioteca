@@ -39,8 +39,8 @@ class SignUpActivity : AppCompatActivity() {
     private fun onSignUp() {
         val email = emailEditText.text.toString().trim()
         val password = passwordEditText.text.toString().trim()
-        val name = bookTitleEditText.text.toString().trim()
-        val surname = bookAuthorEditText.text.toString().trim()
+        val name = bookTitleEditText.text.toString()
+        val surname = bookAuthorEditText.text.toString()
         createUser(name, surname, email, password)
 
     }

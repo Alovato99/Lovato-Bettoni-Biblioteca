@@ -67,7 +67,7 @@ class HomeActivity : AppCompatActivity() {
             {
                 //Creo menu utente admin
                 appBarConfiguration = AppBarConfiguration(setOf(
-                        R.id.nav_home, R.id.nav_rentals, R.id.nav_settings, R.id.nav_browse_books,R.id.nav_add_books,R.id.nav_manage_admins), drawerLayout)
+                        R.id.nav_home, R.id.nav_rentals, R.id.nav_settings, R.id.nav_browse_books,R.id.nav_add_books,R.id.nav_remove_books,R.id.nav_manage_admins), drawerLayout)
 
                 nav_view_admin.inflateMenu(R.menu.activity_main_drawer_admin)
 
@@ -87,7 +87,7 @@ class HomeActivity : AppCompatActivity() {
     }
 
         appBarConfiguration = AppBarConfiguration(setOf(
-                R.id.nav_home, R.id.nav_rentals, R.id.nav_settings, R.id.nav_browse_books,R.id.nav_add_books,R.id.nav_manage_admins), drawerLayout)
+                R.id.nav_home, R.id.nav_rentals, R.id.nav_settings, R.id.nav_browse_books,R.id.nav_add_books,R.id.nav_remove_books,R.id.nav_manage_admins), drawerLayout)
 
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)

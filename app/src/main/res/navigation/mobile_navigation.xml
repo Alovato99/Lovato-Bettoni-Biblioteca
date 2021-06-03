@@ -33,6 +33,11 @@
         android:label="@string/menu_add_books"
         tools:layout="@layout/fragment_add_books" />
     <fragment
+    android:id="@+id/nav_remove_books"
+    android:name="com.example.bibliotecabl.ui.RemoveBooksFragment"
+    android:label="@string/menu_remove_books"
+    tools:layout="@layout/fragment_remove_books" />
+    <fragment
         android:id="@+id/nav_manage_admins"
         android:name="com.example.bibliotecabl.ui.ManageAdminsFragment"
         android:label="@string/menu_manage_admins"
