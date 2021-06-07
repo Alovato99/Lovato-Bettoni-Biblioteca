@@ -143,6 +143,17 @@ class SignUpActivity : AppCompatActivity() {
                             val user = User(name, surname, (counter==0))
                             database.child(uid).setValue(user).addOnCompleteListener { task ->
                                 if (task.isSuccessful) {
+                                    if(counter==0)
+                                    {
+                                        val countMap = HashMap<String,Any>()
+                                        countMap["count"]=0
+                                        FirebaseDatabase.getInstance().getReference("New_Arrivals").setValue(countMap)
+                                        for(i in 0..9)
+                                        {
+                                            countMap[i.toString()]=""
+                                            FirebaseDatabase.getInstance().getReference("New_Arrivals").setValue(countMap)
+                                        }
+                                    }
                                     val intent = Intent(applicationContext, LoginActivity::class.java)
                                     startActivity(intent)
                                     finish()

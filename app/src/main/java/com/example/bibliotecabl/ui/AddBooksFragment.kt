@@ -24,6 +24,7 @@ import kotlinx.android.synthetic.main.fragment_add_books.*
 import java.lang.Integer.parseInt
 import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.HashMap
 
 
 class AddBooksFragment: Fragment() {
@@ -39,7 +40,8 @@ class AddBooksFragment: Fragment() {
     private var copies : Int=0
     private var bookID : String =""
     private var error=false
-    val bookDBReference = FirebaseDatabase.getInstance().getReference("Books")
+    private val bookDBReference = FirebaseDatabase.getInstance().getReference("Books")
+    private val newArrivalsDBReference = FirebaseDatabase.getInstance().getReference("New_Arrivals")
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -180,6 +182,33 @@ class AddBooksFragment: Fragment() {
                             activity, R.string.bookAdded,
                             Toast.LENGTH_SHORT
                     ).show()
+                    newArrivalsDBReference.get().addOnSuccessListener {
+                        //Se count è compreso tra 0 e 10 significa che non sono ancora stati inseriti 10 libri, quindi vanno inseriti i valori nel database per la prima volta
+                        var count =it.child("count").getValue().toString().toInt()
+                        val bookMap = HashMap<String, Any>()
+                        bookMap[count.toString()]=bookID
+                        newArrivalsDBReference.updateChildren(bookMap)
+                        count++
+                        //Se count supera la soglia massima, si riporta a 0
+                        if(count==10)
+                            count=0
+                        bookMap["count"]=count
+                        newArrivalsDBReference.updateChildren(bookMap)
+                        /*else if(count<20)
+                        {
+                            var count =(it.child("count").getValue().toString().toInt())
+                            val bookMap = HashMap<String, Any>()
+                            //I valori compresi tra 10 e 20
+                            bookMap[(count-10).toString()]=bookID
+                            newArrivalsDBReference.updateChildren(bookMap)
+                            //Se si arriva al massimo, si reimposta il contatore a 10
+                            if(count==20)
+                                count=9
+                            bookMap["count"]=count+1
+                            newArrivalsDBReference.updateChildren(bookMap)
+                        }*/
+
+                    }
                 }
                 .addOnFailureListener {
                     Log.d(TAG, "Failed to set value to database: ${it.message}")
