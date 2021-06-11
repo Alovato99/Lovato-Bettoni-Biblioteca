@@ -36,6 +36,9 @@ class LoginActivity : AppCompatActivity() {
         auth = Firebase.auth
 
         setContentView(R.layout.activity_login)
+        emailEditText.setText("aaaa@aaa.aa")
+        passwordEditText.setText("aaaaaa")
+
         signUpTextView.setOnClickListener {
             onSignUpClick()
         }

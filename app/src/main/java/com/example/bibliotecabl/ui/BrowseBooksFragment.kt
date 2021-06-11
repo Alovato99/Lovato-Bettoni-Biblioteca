@@ -1,22 +1,25 @@
 package com.example.bibliotecabl.ui
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.OrientationHelper
 import androidx.recyclerview.widget.RecyclerView
+import com.example.bibliotecabl.Book
 import com.example.bibliotecabl.R
-import com.example.bibliotecabl.ui.ItemAdapter
-import kotlinx.android.synthetic.main.fragment_browse_books.*
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 class BrowseBooksFragment: Fragment() {
+
+    private val database = Firebase.database.reference.child("Books")
+    private var booksList : ArrayList<Book> = ArrayList()
 
 
     override fun onCreateView(
@@ -32,9 +35,30 @@ class BrowseBooksFragment: Fragment() {
             items.add("item n $i")
         }
 
+        database.addValueEventListener(object : ValueEventListener{
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if(snapshot!!.exists())
+                {
+                    for(b in snapshot.children)
+                    {
+                        val book = b.getValue(Book::class.java)
+                        booksList.add(book!!)
+                    }
 
-        rclView.layoutManager = LinearLayoutManager(activity?.baseContext, RecyclerView.HORIZONTAL, false)
-        rclView.adapter = ItemAdapter(items)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+
+        for(b in booksList)
+            Log.d("BookList", b.title)
+
+
+        rclView.layoutManager = LinearLayoutManager(activity?.baseContext, RecyclerView.VERTICAL, false)
+        rclView.adapter = VerticalItemAdapter(booksList)
 
         return root
     }
