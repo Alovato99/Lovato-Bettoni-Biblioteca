@@ -25,6 +25,7 @@ import java.lang.Integer.parseInt
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.HashMap
+import kotlin.concurrent.thread
 
 
 class AddBooksFragment: Fragment() {
@@ -123,19 +124,18 @@ class AddBooksFragment: Fragment() {
                 if (selectedPhotoUri != null) {
                     val filename = UUID.randomUUID().toString()
                     val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
-
                     ref.putFile(selectedPhotoUri!!)
-                            .addOnSuccessListener {
-                                Log.d(TAG, "Successfully uploaded image: ${it.metadata?.path}")
+                        .addOnSuccessListener {
+                            Log.d(TAG, "Successfully uploaded image: ${it.metadata?.path}")
 
-                                ref.downloadUrl.addOnSuccessListener {
-                                    Log.d(TAG, "File Location: $it")
-                                    checkAddBook(it.toString())
-                                }
+                            ref.downloadUrl.addOnSuccessListener {
+                                Log.d(TAG, "File Location: $it")
+                                checkAddBook(it.toString())
                             }
-                            .addOnFailureListener {
-                                Log.d(TAG, "Failed to upload image to storage: ${it.message}")
-                            }
+                        }
+                        .addOnFailureListener {
+                            Log.d(TAG, "Failed to upload image to storage: ${it.message}")
+                        }
                 }
             }
         }

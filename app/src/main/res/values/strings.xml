@@ -51,6 +51,7 @@
     <string name="bookDescription">Descrizione</string>
     <string name="addBook">Aggiungi</string>
     <string name="rentBook">Prenota</string>
+    <string name="returnBook">Restituisci libro</string>
     <string name="bookCopies">Copie</string>
     <string name="titleEmpty">Inserire un titolo</string>
     <string name="authorEmpty">Inserire un autore</string>
