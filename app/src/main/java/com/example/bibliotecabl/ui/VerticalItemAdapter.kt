@@ -1,12 +1,20 @@
 package com.example.bibliotecabl.ui
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bibliotecabl.Book
 import com.example.bibliotecabl.R
+import com.squareup.picasso.Picasso
+import kotlinx.android.synthetic.main.row_item_vertical.*
+
 
 class VerticalItemAdapter(val items: ArrayList<Book>) : RecyclerView.Adapter<VerticalItemAdapter.ViewHolder> (){
 
@@ -14,8 +22,17 @@ class VerticalItemAdapter(val items: ArrayList<Book>) : RecyclerView.Adapter<Ver
 
     override fun getItemCount() = items.size
 
-    override fun onBindViewHolder(holder: VerticalItemAdapter.ViewHolder, position: Int) {
-        holder.vertical_item.text = items.get(position).title
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+
+        holder.vertical_item_title.text = items.get(position).title
+        holder.vertical_item_author.text = items.get(position).author
+        holder.vertical_item_copies.text = "Copie: "+ items.get(position).copies
+        val url = items.get(position).bookImageUrl
+        Picasso.get().load(url).into(holder.vertical_item_cover)
+        //val bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream())
+        //holder.vertical_item_cover.setImageBitmap(bmp)
+
+
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): VerticalItemAdapter.ViewHolder {
@@ -24,7 +41,10 @@ class VerticalItemAdapter(val items: ArrayList<Book>) : RecyclerView.Adapter<Ver
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val vertical_item: TextView = itemView.findViewById(R.id.bookName)
+        val vertical_item_title: TextView = itemView.findViewById(R.id.bookName)
+        val vertical_item_author: TextView = itemView.findViewById(R.id.bookAuthor)
+        val vertical_item_cover : ImageView = itemView.findViewById(R.id.bookCover)
+        val vertical_item_copies : TextView = itemView.findViewById(R.id.bookCopies)
 
     }
 }

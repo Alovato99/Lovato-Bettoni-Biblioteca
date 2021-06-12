@@ -15,6 +15,9 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import javax.security.auth.callback.Callback
+
+
 
 class BrowseBooksFragment: Fragment() {
 
@@ -22,6 +25,12 @@ class BrowseBooksFragment: Fragment() {
     private var booksList : ArrayList<Book> = ArrayList()
 
 
+
+
+    fun testClickLinea(v: View)
+    {
+        Log.d("BookList", "cliclk click")
+    }
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
@@ -35,7 +44,7 @@ class BrowseBooksFragment: Fragment() {
             items.add("item n $i")
         }
 
-        database.addValueEventListener(object : ValueEventListener{
+        database.addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot!!.exists())
                 {
@@ -45,6 +54,9 @@ class BrowseBooksFragment: Fragment() {
                         booksList.add(book!!)
                     }
 
+                    rclView.layoutManager = LinearLayoutManager(activity?.baseContext, RecyclerView.VERTICAL, false)
+                    rclView.adapter = VerticalItemAdapter(booksList)
+
                 }
             }
 
@@ -53,12 +65,13 @@ class BrowseBooksFragment: Fragment() {
             }
         })
 
+
+
+
         for(b in booksList)
             Log.d("BookList", b.title)
 
 
-        rclView.layoutManager = LinearLayoutManager(activity?.baseContext, RecyclerView.VERTICAL, false)
-        rclView.adapter = VerticalItemAdapter(booksList)
 
         return root
     }
