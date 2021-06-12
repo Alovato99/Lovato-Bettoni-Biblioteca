@@ -23,6 +23,7 @@ class SignUpActivity : AppCompatActivity() {
     // #### FIREBASE AUTH ####
     private lateinit var auth: FirebaseAuth
 
+
     private var TAG = "SignUpActivity"
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -154,6 +155,11 @@ class SignUpActivity : AppCompatActivity() {
                                             FirebaseDatabase.getInstance().getReference("New_Arrivals").setValue(countMap)
                                         }
                                     }
+                                    val rentMap=HashMap<String,Any>()
+                                    rentMap["active_rents"]=0
+                                    FirebaseDatabase.getInstance().getReference("Rented_Books").child(uid).setValue(rentMap)
+                                    rentMap["total_rents"]=0
+                                    FirebaseDatabase.getInstance().getReference("Rented_Books").child(uid).setValue(rentMap)
                                     val intent = Intent(applicationContext, LoginActivity::class.java)
                                     startActivity(intent)
                                     finish()
