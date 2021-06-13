@@ -2,9 +2,8 @@ package com.example.bibliotecabl.ui
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -21,8 +20,11 @@ import javax.security.auth.callback.Callback
 
 class BrowseBooksFragment: Fragment() {
 
+
     private val database = Firebase.database.reference.child("Books")
     private var booksList : ArrayList<Book> = ArrayList()
+    private var displayList : ArrayList<Book> = ArrayList()
+    lateinit var rclView : RecyclerView
 
 
 
@@ -35,9 +37,12 @@ class BrowseBooksFragment: Fragment() {
             inflater: LayoutInflater,
             container: ViewGroup?,
             savedInstanceState: Bundle?
+
     ): View? {
+        setHasOptionsMenu(true)
         val root = inflater.inflate(R.layout.fragment_browse_books, container, false)
-        val rclView : RecyclerView = root.findViewById(R.id.books_recycler_view)
+        //val rclView : RecyclerView = root.findViewById(R.id.books_recycler_view)
+        rclView=root.findViewById(R.id.books_recycler_view)
 
         val items: ArrayList<String> = ArrayList()
         for(i in 1..100){
@@ -54,8 +59,11 @@ class BrowseBooksFragment: Fragment() {
                         booksList.add(book!!)
                     }
 
+                   //displayList.clear()
+                    displayList.addAll(booksList)
                     rclView.layoutManager = LinearLayoutManager(activity?.baseContext, RecyclerView.VERTICAL, false)
-                    rclView.adapter = VerticalItemAdapter(booksList)
+                    rclView.adapter = VerticalItemAdapter(displayList)
+                    //rclView.adapter = VerticalItemAdapter(booksList)
 
                 }
             }
@@ -74,5 +82,44 @@ class BrowseBooksFragment: Fragment() {
 
 
         return root
+    }
+    override fun onCreateOptionsMenu(menu: Menu, inflater:MenuInflater) {
+        inflater.inflate(R.menu.activity_main_search,menu)
+        val searchItem=menu.findItem(R.id.menu_search)
+        if(searchItem!=null)
+        {
+            val searchView = searchItem.actionView as SearchView
+            searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener{
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    if(newText!!.isNotEmpty())
+                    {
+                        displayList.clear()
+
+                        val search=newText.toLowerCase()
+                        booksList.forEach{
+                            val author=it.author.toLowerCase()
+                            val title=it.title.toLowerCase()
+                            if(author.contains(search)||title.contains(search))
+                            {
+                                displayList.add(it)
+                            }
+                        }
+
+                        rclView.adapter?.notifyDataSetChanged()
+                    }
+                    else
+                    {
+                        displayList.clear()
+                        displayList.addAll(booksList)
+                        rclView.adapter?.notifyDataSetChanged()
+                    }
+                    return true
+                }
+            })
+        }
     }
 }
