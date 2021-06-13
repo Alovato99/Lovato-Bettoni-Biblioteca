@@ -1,8 +1,11 @@
 package com.example.bibliotecabl.ui
 
+import android.content.Intent
 import android.os.Bundle
+import android.provider.AlarmClock.EXTRA_MESSAGE
 import android.util.Log
 import android.view.*
+import android.widget.LinearLayout
 import android.widget.SearchView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -20,7 +23,6 @@ import javax.security.auth.callback.Callback
 
 class BrowseBooksFragment: Fragment() {
 
-
     private val database = Firebase.database.reference.child("Books")
     private var booksList : ArrayList<Book> = ArrayList()
     private var displayList : ArrayList<Book> = ArrayList()
@@ -29,9 +31,13 @@ class BrowseBooksFragment: Fragment() {
 
 
 
-    fun testClickLinea(v: View)
+    fun openViewBook()
     {
-        Log.d("BookList", "cliclk click")
+//        val intent = Intent(this.context, Book::class.java).apply {
+//            putExtra(EXTRA_MESSAGE, "message")
+//        }
+//        startActivity(intent)
+        Log.d("ddddd", "clickclickclick")
     }
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -43,6 +49,8 @@ class BrowseBooksFragment: Fragment() {
         val root = inflater.inflate(R.layout.fragment_browse_books, container, false)
         //val rclView : RecyclerView = root.findViewById(R.id.books_recycler_view)
         rclView=root.findViewById(R.id.books_recycler_view)
+
+
 
         val items: ArrayList<String> = ArrayList()
         for(i in 1..100){
@@ -72,6 +80,7 @@ class BrowseBooksFragment: Fragment() {
                 TODO("Not yet implemented")
             }
         })
+
 
 
 
