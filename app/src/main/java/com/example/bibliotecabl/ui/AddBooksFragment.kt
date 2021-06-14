@@ -186,14 +186,15 @@ class AddBooksFragment: Fragment() {
                         //Se count è compreso tra 0 e 10 significa che non sono ancora stati inseriti 10 libri, quindi vanno inseriti i valori nel database per la prima volta
                         var count =it.child("count").getValue().toString().toInt()
                         val bookMap = HashMap<String, Any>()
+                        val countMap = HashMap<String, Any>()
                         bookMap[count.toString()]=bookID
-                        newArrivalsDBReference.updateChildren(bookMap)
+                        newArrivalsDBReference.child("BookList").updateChildren(bookMap)
                         count++
                         //Se count supera la soglia massima, si riporta a 0
                         if(count==10)
                             count=0
-                        bookMap["count"]=count
-                        newArrivalsDBReference.updateChildren(bookMap)
+                        countMap["count"]=count
+                        newArrivalsDBReference.updateChildren(countMap)
                         /*else if(count<20)
                         {
                             var count =(it.child("count").getValue().toString().toInt())

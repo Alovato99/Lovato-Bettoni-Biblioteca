@@ -147,13 +147,14 @@ class SignUpActivity : AppCompatActivity() {
                                     if(counter==0)
                                     {
                                         val countMap = HashMap<String,Any>()
+                                        val bookMap = HashMap<String,Any>()
                                         countMap["count"]=0
                                         FirebaseDatabase.getInstance().getReference("New_Arrivals").setValue(countMap)
                                         for(i in 0..9)
                                         {
-                                            countMap[i.toString()]=""
-                                            FirebaseDatabase.getInstance().getReference("New_Arrivals").setValue(countMap)
+                                            bookMap[i.toString()]=""
                                         }
+                                        FirebaseDatabase.getInstance().getReference("New_Arrivals").child("BookList").setValue(bookMap)
                                     }
                                     val rentMap=HashMap<String,Any>()
                                     rentMap["active_rents"]=0

@@ -69,6 +69,12 @@
     <string name="bookRemoved">Libro rimosso correttamente</string>
     <string name="bookNotFound">Non esistono libri con questo titolo e autore</string>
 
+    <string name="bookRented">Libro prenotato correttamente</string>
+    <string name="bookAlreadyRented">Hai già prenotato questo libro!</string>
+
+    <string name="bookReturned">Libro restituito correttamente</string>
+    <string name="bookNotOwned">Non possiedi questo libro!</string>
+
 
 
 </resources>

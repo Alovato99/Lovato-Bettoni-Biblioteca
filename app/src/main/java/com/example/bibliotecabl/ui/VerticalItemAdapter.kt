@@ -34,6 +34,7 @@ class VerticalItemAdapter(val items: ArrayList<Book>) : RecyclerView.Adapter<Ver
         holder.vertical_item_title.text = items.get(position).title
         holder.vertical_item_author.text = items.get(position).author
         holder.vertical_item_copies.text = "Copie: "+ items.get(position).copies
+        val bookID = items.get(position).title.replace(" ", "-") + "-" + items.get(position).author.replace(" ", "-")
         val url = items.get(position).bookImageUrl
         Picasso.get().load(url).into(holder.vertical_item_cover)
         //val bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream())
@@ -42,7 +43,7 @@ class VerticalItemAdapter(val items: ArrayList<Book>) : RecyclerView.Adapter<Ver
 
         holder.vertical_layout.setOnClickListener(){
             val intent = Intent(it.context, BookActivity::class.java).apply {
-                putExtra(EXTRA_MESSAGE, "message")
+                putExtra(EXTRA_MESSAGE, bookID)
             }
             startActivity(it.context, intent, null)
         }

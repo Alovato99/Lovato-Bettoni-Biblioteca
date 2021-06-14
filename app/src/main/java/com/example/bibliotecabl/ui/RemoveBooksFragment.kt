@@ -54,22 +54,23 @@ class RemoveBooksFragment : Fragment() {
                     var found=-1
                     for(i in 0..9)
                     {
-                        if(it.child(i.toString()).getValue().toString() == bookID)
+                        if(it.child("BookList").child(i.toString()).getValue().toString() == bookID)
                             found=i
                     }
                     if(found>=0)
                     {
                         val bookMap = HashMap<String, Any>()
+                        val countMap = HashMap<String, Any>()
                         var lastElement=0
                         if(found<9)
                         {
                             var nextBook = ""
                             for (i in found..8) {
-                                nextBook = it.child((i+1).toString()).getValue().toString()
+                                nextBook = it.child("BookList").child((i+1).toString()).getValue().toString()
                                 if(nextBook!="")
                                 {
                                     bookMap[i.toString()]=nextBook
-                                    database.child("New_Arrivals").updateChildren(bookMap)
+                                    //database.child("New_Arrivals").child("BookList").updateChildren(bookMap)
                                     if(i==8)
                                         lastElement=i+1
                                 }
@@ -80,16 +81,16 @@ class RemoveBooksFragment : Fragment() {
                                 }
                             }
                             bookMap[(lastElement).toString()]=""
-                            database.child("New_Arrivals").updateChildren(bookMap)
-                            bookMap["count"]=lastElement
-                            database.child("New_Arrivals").updateChildren(bookMap)
+                            database.child("New_Arrivals").child("BookList").updateChildren(bookMap)
+                            countMap["count"]=lastElement
+                            database.child("New_Arrivals").updateChildren(countMap)
                         }
                         else if(found==9)
                         {
                             bookMap["9"]=""
-                            database.child("New_Arrivals").updateChildren(bookMap)
-                            bookMap["count"]=9
-                            database.child("New_Arrivals").updateChildren(bookMap)
+                            database.child("New_Arrivals").child("BookList").updateChildren(bookMap)
+                            countMap["count"]=9
+                            database.child("New_Arrivals").updateChildren(countMap)
                         }
                     }
                 }
