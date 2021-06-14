@@ -31,14 +31,7 @@ class BrowseBooksFragment: Fragment() {
 
 
 
-    fun openViewBook()
-    {
-//        val intent = Intent(this.context, Book::class.java).apply {
-//            putExtra(EXTRA_MESSAGE, "message")
-//        }
-//        startActivity(intent)
-        Log.d("ddddd", "clickclickclick")
-    }
+
     override fun onCreateView(
             inflater: LayoutInflater,
             container: ViewGroup?,
@@ -92,6 +85,7 @@ class BrowseBooksFragment: Fragment() {
 
         return root
     }
+
     override fun onCreateOptionsMenu(menu: Menu, inflater:MenuInflater) {
         inflater.inflate(R.menu.activity_main_search,menu)
         val searchItem=menu.findItem(R.id.menu_search)

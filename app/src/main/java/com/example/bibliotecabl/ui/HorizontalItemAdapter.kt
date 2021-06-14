@@ -5,16 +5,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.bibliotecabl.Book
 import com.example.bibliotecabl.R
 
-class HorizontalItemAdapter(val items: ArrayList<String>) : RecyclerView.Adapter<HorizontalItemAdapter.ViewHolder> (){
+class HorizontalItemAdapter(val items: ArrayList<Book>) : RecyclerView.Adapter<HorizontalItemAdapter.ViewHolder> (){
 
 
 
     override fun getItemCount() = items.size
 
     override fun onBindViewHolder(holder: HorizontalItemAdapter.ViewHolder, position: Int) {
-            holder.horizontal_item.text = items[position]
+            holder.horizontal_item.text = items[position].title
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): HorizontalItemAdapter.ViewHolder {
