@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bibliotecabl.Book
 import com.example.bibliotecabl.R
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -21,7 +22,8 @@ class HomeFragment : Fragment() {
 
     lateinit var rclViewNewBooks : RecyclerView
     lateinit var rclViewRentBooks : RecyclerView
-    private val database = Firebase.database.reference.child("Books")
+    private val database_books_reference = Firebase.database.reference.child("Books")
+    private val database_rents_reference = Firebase.database.reference.child("Rented_Books")
     private var booksList : ArrayList<Book> = ArrayList()
 
 
@@ -39,7 +41,7 @@ class HomeFragment : Fragment() {
         rclViewRentBooks=root.findViewById(R.id.books_recycler_view_home_rents)
 
 
-        database.addListenerForSingleValueEvent(object : ValueEventListener {
+        database_books_reference.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if(snapshot!!.exists())
                 {
@@ -62,6 +64,16 @@ class HomeFragment : Fragment() {
             }
         })
 
+
+
+        val currentuser = FirebaseAuth.getInstance().getCurrentUser()?.getUid();
+        val activeRents : TextView = root.findViewById(R.id.text_home_active_rents)
+        val totalRents : TextView = root.findViewById(R.id.text_home_total_rents)
+
+        database_rents_reference.child(currentuser!!).get().addOnSuccessListener {
+            activeRents.text =getString(R.string.active_rents) +" "+ it.child("active_rents").value.toString()
+            totalRents.text = getString(R.string.total_rents) +" "+ it.child("total_rents").value.toString()
+        }
         textView.setOnClickListener()
         {
             val intent = Intent(context, BookActivity::class.java)

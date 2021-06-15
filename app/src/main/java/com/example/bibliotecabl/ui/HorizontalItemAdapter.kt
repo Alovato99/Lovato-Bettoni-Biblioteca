@@ -24,7 +24,7 @@ class HorizontalItemAdapter(val items: ArrayList<Book>) : RecyclerView.Adapter<H
     }
 
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val horizontal_item: TextView = itemView.findViewById(R.id.firstItem)
+        val horizontal_item: TextView = itemView.findViewById(R.id.horizontal_book_title)
 
 
     }

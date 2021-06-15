@@ -74,7 +74,8 @@
 
     <string name="bookReturned">Libro restituito correttamente</string>
     <string name="bookNotOwned">Non possiedi questo libro!</string>
-
+    <string name="active_rents">Prenotazioni attive:</string>
+    <string name="total_rents">Prenotazioni totali:</string>
 
 
 </resources>
