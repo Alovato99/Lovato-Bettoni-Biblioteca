@@ -45,14 +45,14 @@ class BrowseBooksFragment: Fragment() {
 
 
 
-        val items: ArrayList<String> = ArrayList()
+        /*val items: ArrayList<String> = ArrayList()
         for(i in 1..100){
             items.add("item n $i")
-        }
+        }*/
 
         database.addListenerForSingleValueEvent(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
-                if(snapshot!!.exists())
+                if(snapshot.exists())
                 {
                     for(b in snapshot.children)
                     {

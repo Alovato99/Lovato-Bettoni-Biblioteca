@@ -2,6 +2,9 @@ package com.example.bibliotecabl.ui
 
 import android.os.Bundle
 import android.provider.AlarmClock.EXTRA_MESSAGE
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.ActionBar
@@ -25,6 +28,9 @@ class BookActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_book)
+
+        getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
+        getSupportActionBar()?.setDisplayShowTitleEnabled(false);
         key = intent.getStringExtra(EXTRA_MESSAGE).toString()
         database.child("Books").child(key).get().addOnSuccessListener {
             bookTitleEditText.text=it.child("title").value.toString()
@@ -119,5 +125,10 @@ class BookActivity : AppCompatActivity() {
                 }
             }
         }
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        finish()
+        return super.onOptionsItemSelected(item)
     }
 }
