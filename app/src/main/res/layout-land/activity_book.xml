@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="0dp"
+    android:layout_marginBottom="0dp"
+    android:padding="12dp"
+    tools:context="ui.BookActivity">
+
+    <ImageView
+        android:id="@+id/imageIcon"
+        android:layout_width="99dp"
+        android:layout_height="144dp"
+        android:layout_weight="1"
+        app:layout_constraintBottom_toTopOf="@+id/rentButton"
+        app:layout_constraintEnd_toStartOf="@+id/guideline2"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/bookTitleEditText" />
+
+    <TextView
+        android:id="@+id/bookTitleEditText"
+        android:layout_width="200dp"
+        android:layout_height="0dp"
+        android:ems="10"
+        android:fontFamily="@font/teko_bold"
+        android:hint="@string/bookTitle"
+        android:inputType="textMultiLine"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/bookAuthorEditText"
+        android:layout_width="200dp"
+        android:layout_height="0dp"
+        android:layout_marginStart="10dp"
+        android:layout_marginLeft="10dp"
+        android:ems="10"
+        android:fontFamily="@font/teko_light"
+        android:hint="@string/bookAuthor"
+        android:inputType="textMultiLine"
+        android:textColor="@color/black"
+        android:textSize="25sp"
+        app:layout_constraintStart_toEndOf="@+id/bookTitleEditText"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/copiesEditText"
+        android:layout_width="99dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="28dp"
+        android:layout_marginLeft="28dp"
+        android:hint="Copie: 0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/bookAuthorEditText"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/bookDescEditText"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:background="@drawable/multi_text_rectangle"
+        android:ems="10"
+        android:gravity="start|top"
+        android:hint="Descrizione"
+        android:inputType="textMultiLine"
+        app:layout_constraintBottom_toTopOf="@+id/rentButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/guideline2"
+        app:layout_constraintTop_toBottomOf="@+id/bookAuthorEditText" />
+
+    <Button
+        android:id="@+id/rentButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onRentClick"
+        android:text="@string/rentBook"
+        app:backgroundTint="@color/blueLink"
+        app:layout_constraintBottom_toTopOf="@+id/returnButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/returnButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="onReturnClick"
+        android:text="@string/returnBook"
+        app:backgroundTint="@color/lightGrey"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.333"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="top"
+        app:constraint_referenced_ids="guideline3"
+        tools:layout_editor_absoluteX="12dp"
+        tools:layout_editor_absoluteY="669dp" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:barrierDirection="left"
+        app:constraint_referenced_ids="guideline2"
+        tools:layout_editor_absoluteX="399dp"
+        tools:layout_editor_absoluteY="12dp" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_percent="0.4" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="20dp"
+        app:layout_constraintGuide_percent="0.5" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
