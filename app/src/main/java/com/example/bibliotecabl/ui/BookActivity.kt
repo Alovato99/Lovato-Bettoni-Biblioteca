@@ -99,7 +99,7 @@ class BookActivity : AppCompatActivity() {
             database.child("Rented_Books").child(uid).get().addOnSuccessListener {
                 if (it.child("BookList").child(key).exists())
                 {
-                    activeRents = 1 - it.child("active_rents").value.toString().toInt()
+                    activeRents = it.child("active_rents").value.toString().toInt()-1
                     database.child("Rented_Books").child(uid).child("BookList").child(key).removeValue().addOnCompleteListener { task ->
                         if (task.isSuccessful) {
                             val updateMap = HashMap<String, Any>()

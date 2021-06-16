@@ -29,7 +29,7 @@
         tools:layout="@layout/fragment_browse_books" />
     <fragment
         android:id="@+id/nav_add_books"
-        android:name="com.example.bibliotecabl.ui.addbooks.AddBooksFragment"
+        android:name="com.example.bibliotecabl.ui.AddBooksFragment"
         android:label="@string/menu_add_books"
         tools:layout="@layout/fragment_add_books" />
     <fragment

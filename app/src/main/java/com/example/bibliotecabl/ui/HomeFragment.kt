@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.bibliotecabl.Book
 import com.example.bibliotecabl.R
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -22,9 +23,14 @@ class HomeFragment : Fragment() {
 
     lateinit var rclViewNewBooks : RecyclerView
     lateinit var rclViewRentBooks : RecyclerView
+    private var auth: FirebaseAuth = Firebase.auth
+    private val currentUser = auth.currentUser
+    private val uid = currentUser!!.uid
     private val database_books_reference = Firebase.database.reference.child("Books")
-    private val database_rents_reference = Firebase.database.reference.child("Rented_Books")
-    private var booksList : ArrayList<Book> = ArrayList()
+    private val database_rents_reference = Firebase.database.reference.child("Rented_Books").child(uid)
+    private var booksList : MutableList<Book> = mutableListOf<Book>()
+    private var rentalsList : MutableList<Book> = mutableListOf<Book>()
+
 
 
     override fun onCreateView(
@@ -53,8 +59,8 @@ class HomeFragment : Fragment() {
 
                     rclViewNewBooks.layoutManager = LinearLayoutManager(activity?.baseContext, RecyclerView.HORIZONTAL, false)
                     rclViewNewBooks.adapter = HorizontalItemAdapter(booksList)
-                    rclViewRentBooks.layoutManager = LinearLayoutManager(activity?.baseContext, RecyclerView.HORIZONTAL, false)
-                    rclViewRentBooks.adapter = HorizontalItemAdapter(booksList)
+                    /*rclViewRentBooks.layoutManager = LinearLayoutManager(activity?.baseContext, RecyclerView.HORIZONTAL, false)
+                    rclViewRentBooks.adapter = HorizontalItemAdapter(booksList)*/
 
                 }
             }
@@ -65,12 +71,38 @@ class HomeFragment : Fragment() {
         })
 
 
+        database_rents_reference.child("BookList").addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                rentalsList.clear()
+                if(snapshot.exists()) {
+                    for (b in snapshot.children) {
+                        database_books_reference.child(b.key.toString()).get().addOnSuccessListener {
+                            val book = it.getValue(Book::class.java)
+                            rentalsList.add(book!!)
+                            rclViewRentBooks.layoutManager = LinearLayoutManager(activity?.baseContext, RecyclerView.HORIZONTAL, false)
+                            rclViewRentBooks.adapter = HorizontalItemAdapter(rentalsList)
+                        }
+                        /*val book = b.getValue(Book::class.java)
+                        booksList.add(book!!)*/
+                    }
+                }
+                else
+                {
+                    rclViewRentBooks.layoutManager = LinearLayoutManager(activity?.baseContext, RecyclerView.HORIZONTAL, false)
+                    rclViewRentBooks.adapter = HorizontalItemAdapter(rentalsList)
+                }
+            }
 
-        val currentuser = FirebaseAuth.getInstance().getCurrentUser()?.getUid();
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+
+
         val activeRents : TextView = root.findViewById(R.id.text_home_active_rents)
         val totalRents : TextView = root.findViewById(R.id.text_home_total_rents)
 
-        database_rents_reference.child(currentuser!!).get().addOnSuccessListener {
+        database_rents_reference.get().addOnSuccessListener {
             activeRents.text =getString(R.string.active_rents) +" "+ it.child("active_rents").value.toString()
             totalRents.text = getString(R.string.total_rents) +" "+ it.child("total_rents").value.toString()
         }

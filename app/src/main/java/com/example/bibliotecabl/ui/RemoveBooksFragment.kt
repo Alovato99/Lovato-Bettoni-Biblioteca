@@ -39,10 +39,10 @@ class RemoveBooksFragment : Fragment() {
                 val database = Firebase.database.reference
 
 
-                    /*database.child("Books").child(bookID).get().addOnSuccessListener {
-                        var bookLink=it.child("bookImageUrl").getValue().toString()
+                    database.child("Books").child(bookID).get().addOnSuccessListener {
+                        var bookLink=it.child("imageID").getValue().toString()
                         FirebaseStorage.getInstance().getReference().child("images").child(bookLink).delete()
-                    }*/
+                    }
 
 
                 database.child("Books").child(bookID).removeValue()

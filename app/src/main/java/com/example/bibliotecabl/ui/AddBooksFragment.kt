@@ -1,4 +1,4 @@
-package com.example.bibliotecabl.ui.addbooks
+package com.example.bibliotecabl.ui
 
 import android.app.Activity
 import android.content.ContentValues.TAG
@@ -40,6 +40,7 @@ class AddBooksFragment: Fragment() {
     private var copiesText : String = ""
     private var copies : Int=0
     private var bookID : String =""
+    private var imageId : String=""
     private var error=false
     private val bookDBReference = FirebaseDatabase.getInstance().getReference("Books")
     private val newArrivalsDBReference = FirebaseDatabase.getInstance().getReference("New_Arrivals")
@@ -122,8 +123,8 @@ class AddBooksFragment: Fragment() {
 
             if (!error) {
                 if (selectedPhotoUri != null) {
-                    val filename = UUID.randomUUID().toString()
-                    val ref = FirebaseStorage.getInstance().getReference("/images/$filename")
+                    imageId = UUID.randomUUID().toString()
+                    val ref = FirebaseStorage.getInstance().getReference("/images/$imageId")
                     ref.putFile(selectedPhotoUri!!)
                         .addOnSuccessListener {
                             Log.d(TAG, "Successfully uploaded image: ${it.metadata?.path}")
@@ -172,7 +173,7 @@ class AddBooksFragment: Fragment() {
         private fun saveBookToFirebaseDatabase(bookImageUrl: String) {
         val sdf = SimpleDateFormat("dd/M/yyyy")
         val currentDate = sdf.format(Date())
-        val book = Book(title, author,description,copies, bookImageUrl, currentDate)
+        val book = Book(title, author,description,copies, bookImageUrl, imageId, currentDate)
 
 
         bookDBReference.child(bookID).setValue(book)
@@ -233,5 +234,3 @@ class AddBooksFragment: Fragment() {
         }
     }
 }
-
-class Book(val title: String, val author: String, val desc: String, val copies: Int, val bookImageUrl: String, val currentDate: String)

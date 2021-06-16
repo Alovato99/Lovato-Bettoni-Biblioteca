@@ -7,7 +7,7 @@
     android:layout_marginTop="25dp"
     android:layout_marginBottom="25dp"
     android:padding="12dp"
-    tools:context="ui.addbooks.AddBooksFragment">
+    tools:context="ui.AddBooksFragment">
 
     <ImageView
         android:id="@+id/imageIcon"

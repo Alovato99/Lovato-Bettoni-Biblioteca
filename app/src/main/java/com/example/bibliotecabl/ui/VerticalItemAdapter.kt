@@ -24,7 +24,7 @@ import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.row_item_vertical.*
 
 
-class VerticalItemAdapter(val items: ArrayList<Book>) : RecyclerView.Adapter<VerticalItemAdapter.ViewHolder> (){
+class VerticalItemAdapter(val items: MutableList<Book>) : RecyclerView.Adapter<VerticalItemAdapter.ViewHolder> (){
 
 
     override fun getItemCount() = items.size

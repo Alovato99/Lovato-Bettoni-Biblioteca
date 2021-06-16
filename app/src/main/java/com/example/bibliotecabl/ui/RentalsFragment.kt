@@ -24,8 +24,8 @@ class RentalsFragment : Fragment() {
 
 
     private val bookDatabase = Firebase.database.reference.child("Books")
-    private var booksList : ArrayList<Book> = ArrayList()
-    private var displayList : ArrayList<Book> = ArrayList()
+    private var booksList : MutableList<Book> = mutableListOf<Book>()
+    private var displayList : MutableList<Book> = mutableListOf<Book>()
     lateinit var rclView : RecyclerView
     private var auth: FirebaseAuth = Firebase.auth
     private val currentUser = auth.currentUser
@@ -44,24 +44,35 @@ class RentalsFragment : Fragment() {
         //val textView: TextView = root.findViewById(R.id.text_rentals)
         rclView=root.findViewById(R.id.rentals_recycler_view)
 
-        /*database.addListenerForSingleValueEvent(object : ValueEventListener {
+        database.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 //if(snapshot.key!="BookList")
                 //{
-                    for(b in snapshot.children)
-                    {
+                displayList.clear()
+                booksList.clear()
+                if(snapshot.exists()) {
+                    for (b in snapshot.children) {
                         bookDatabase.child(b.key.toString()).get().addOnSuccessListener {
-                            val book =it.getValue(Book::class.java)
+                            val book = it.getValue(Book::class.java)
                             booksList.add(book!!)
+                            displayList.add(book!!)
+                            rclView.layoutManager = LinearLayoutManager(activity?.baseContext, RecyclerView.VERTICAL, false)
+                            rclView.adapter = VerticalItemAdapter(displayList)
                         }
                         /*val book = b.getValue(Book::class.java)
                         booksList.add(book!!)*/
                     }
-
-                    //displayList.clear()
-                    displayList.addAll(booksList)
+                }
+                else
+                {
                     rclView.layoutManager = LinearLayoutManager(activity?.baseContext, RecyclerView.VERTICAL, false)
                     rclView.adapter = VerticalItemAdapter(displayList)
+                }
+
+                    //displayList.clear()
+                    //displayList.addAll(booksList)
+                    //rclView.layoutManager = LinearLayoutManager(activity?.baseContext, RecyclerView.VERTICAL, false)
+                    //rclView.adapter = VerticalItemAdapter(displayList)
                     //rclView.adapter = VerticalItemAdapter(booksList)
 
                //}
@@ -70,20 +81,21 @@ class RentalsFragment : Fragment() {
             override fun onCancelled(error: DatabaseError) {
                 TODO("Not yet implemented")
             }
-        })*/
+        })
 
 
-        database.get().addOnSuccessListener {
+        /*database.get().addOnSuccessListener {
             for(b in it.children) {
                 bookDatabase.child(b.key.toString()).get().addOnSuccessListener {
                     val book = it.getValue(Book::class.java)
                     booksList.add(book!!)
+                    displayList.add(book!!)
+                    rclView.layoutManager = LinearLayoutManager(activity?.baseContext, RecyclerView.VERTICAL, false)
+                    rclView.adapter = VerticalItemAdapter(displayList)
                 }
             }
-        }
-        displayList.addAll(booksList)
-        rclView.layoutManager = LinearLayoutManager(activity?.baseContext, RecyclerView.VERTICAL, false)
-        rclView.adapter = VerticalItemAdapter(displayList)
+        }*/
+
 
         for(b in booksList)
             Log.d("BookList", b.title)

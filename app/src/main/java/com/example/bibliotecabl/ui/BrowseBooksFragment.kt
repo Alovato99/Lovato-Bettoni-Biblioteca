@@ -24,8 +24,10 @@ import javax.security.auth.callback.Callback
 class BrowseBooksFragment: Fragment() {
 
     private val database = Firebase.database.reference.child("Books")
-    private var booksList : ArrayList<Book> = ArrayList()
-    private var displayList : ArrayList<Book> = ArrayList()
+    //private var booksList : ArrayList<Book> = ArrayList()
+    //private var displayList : ArrayList<Book> = ArrayList()
+    private var booksList : MutableList<Book> = mutableListOf<Book>()
+    private var displayList : MutableList<Book> = mutableListOf<Book>()
     lateinit var rclView : RecyclerView
 
 
@@ -50,8 +52,10 @@ class BrowseBooksFragment: Fragment() {
             items.add("item n $i")
         }*/
 
-        database.addListenerForSingleValueEvent(object : ValueEventListener{
+        database.addValueEventListener(object : ValueEventListener{
             override fun onDataChange(snapshot: DataSnapshot) {
+                displayList.clear()
+                booksList.clear()
                 if(snapshot.exists())
                 {
                     for(b in snapshot.children)
