@@ -1,5 +1,8 @@
 package com.example.bibliotecabl.ui
 
+import android.content.Intent
+import android.opengl.Visibility
+import android.provider.AlarmClock
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +11,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.bibliotecabl.Book
 import com.example.bibliotecabl.R
@@ -23,10 +27,15 @@ class HorizontalItemAdapter(val items: MutableList<Book>) : RecyclerView.Adapter
         holder.horizontal_book_title.text = items[position].title
         val url = items.get(position).bookImageUrl
         Picasso.get().load(url).into(holder.horizontal_book_cover)
+        val bookID = items.get(position).title.replace(" ", "-") + "-" + items.get(position).author.replace(" ", "-")
         //holder.horizontal_book_author.text = items[position].author
+        //holder.horizontal_book_author.visibility = View.GONE
         holder.horizontal_layout.setOnClickListener()
         {
-
+            val intent = Intent(it.context, BookActivity::class.java).apply {
+            putExtra(AlarmClock.EXTRA_MESSAGE, bookID)
+        }
+            ContextCompat.startActivity(it.context, intent, null)
         }
 
     }

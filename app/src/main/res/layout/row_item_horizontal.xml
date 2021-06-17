@@ -16,7 +16,9 @@
             android:id="@+id/horizontal_book_title"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:text="default text"
+            android:text="@string/default_bookName"
+            android:fontFamily="@font/teko_regular"
+            android:textColor="@color/black"
             app:layout_constraintBottom_toTopOf="@id/horizontal_book_cover"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -33,7 +35,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 
-    <!--    <TextView-->
+<!--    <TextView-->
 <!--    android:id="@+id/horizontal_book_author"-->
 <!--    android:layout_width="wrap_content"-->
 <!--    android:layout_height="wrap_content"-->

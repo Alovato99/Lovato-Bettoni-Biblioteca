@@ -26,7 +26,9 @@
             android:id="@+id/bookName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="BookName"
+            android:fontFamily="@font/teko_regular"
+            android:textColor="@color/black"
+            android:text="@string/default_bookName"
             android:textSize="24sp"
             android:textStyle="bold" />
 
@@ -34,17 +36,20 @@
             android:id="@+id/bookAuthor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="TextView"
-            android:textColor="@color/purple_700" />
+            android:textSize="20sp"
+            android:fontFamily="@font/teko_regular"
+            android:text="@string/default_author"
+            android:textColor="@color/black" />
 
         <TextView
             android:id="@+id/bookCopies"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:textColor="@color/black"
             android:layout_weight="1"
-            android:text="Copie:"
-            android:textSize="14sp" />
+            android:text="@string/default_copies"
+            android:textSize="11sp" />
     </LinearLayout>
 
 </LinearLayout>
