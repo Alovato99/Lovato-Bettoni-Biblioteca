@@ -31,9 +31,11 @@ class RemoveBooksFragment : Fragment() {
         val removeBook: Button = root.findViewById(R.id.confirmRemoveBookButton)
         removeBook.setOnClickListener()
         {
-            title=removeBookTitleEditText.text.toString()
-            author=removeBookAuthorEditText.text.toString()
+            title=removeBookTitleEditText.text.toString().replace(".", "%")
+            author=removeBookAuthorEditText.text.toString().replace(".", "%")
             bookID= title.replace(" ", "-") + "-" + author.replace(" ", "-") //EXAMPLE: "Rose-Viola-Nicola-Pascoli"
+
+
             if(title.isNotEmpty() && author.isNotEmpty()) {
                 val database = Firebase.database.reference
 

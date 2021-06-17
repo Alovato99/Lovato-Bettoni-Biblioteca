@@ -35,10 +35,10 @@ class fieldChecker {
     }
     fun checkBookInfo (text: String): String
     {
-        if(text.contains("."))
-            return text.replace(".", "%")
         if(text.contains("#") || text.contains("$") || text.contains("[") || text.contains("]") || text.contains("%"))
             return "[ERROR_TEXT]"
+        if(text.contains("."))
+            return text.replace(".", "%")
        return text
 
     }

@@ -54,9 +54,9 @@ class HomeFragment : Fragment() {
                 {
                     for(b in snapshot.children)
                     {
-                        val book = b.getValue(Book::class.java)
+                        var book = b.getValue(Book::class.java)
                         if(book?.title?.contains("%")!!)
-                            book?.title.replace("%", ".")
+                            book.title=book?.title.replace("%", ".")
                         booksList.add(book!!)
                     }
 
@@ -80,7 +80,9 @@ class HomeFragment : Fragment() {
                 if(snapshot.exists()) {
                     for (b in snapshot.children) {
                         database_books_reference.child(b.key.toString()).get().addOnSuccessListener {
-                            val book = it.getValue(Book::class.java)
+                            var book = it.getValue(Book::class.java)
+                            if(book?.title?.contains("%")!!)
+                                book.title=book?.title.replace("%", ".")
                             rentalsList.add(book!!)
                             rclViewRentBooks.layoutManager = LinearLayoutManager(activity?.baseContext, RecyclerView.HORIZONTAL, false)
                             rclViewRentBooks.adapter = HorizontalItemAdapter(rentalsList)

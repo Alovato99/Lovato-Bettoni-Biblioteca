@@ -34,7 +34,7 @@ class VerticalItemAdapter(val items: MutableList<Book>) : RecyclerView.Adapter<V
         holder.vertical_item_title.text = items.get(position).title
         holder.vertical_item_author.text = items.get(position).author
         holder.vertical_item_copies.text = "Copie: "+ items.get(position).copies
-        val bookID = items.get(position).title.replace(" ", "-") + "-" + items.get(position).author.replace(" ", "-")
+        val bookID = (items.get(position).title.replace(" ", "-") + "-" + items.get(position).author.replace(" ", "-")).replace(".","%")
         val url = items.get(position).bookImageUrl
         Picasso.get().load(url).into(holder.vertical_item_cover)
         //val bmp = BitmapFactory.decodeStream(url.openConnection().getInputStream())

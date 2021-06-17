@@ -27,7 +27,7 @@ class HorizontalItemAdapter(val items: MutableList<Book>) : RecyclerView.Adapter
         holder.horizontal_book_title.text = items[position].title
         val url = items.get(position).bookImageUrl
         Picasso.get().load(url).into(holder.horizontal_book_cover)
-        val bookID = items.get(position).title.replace(" ", "-") + "-" + items.get(position).author.replace(" ", "-")
+        val bookID = (items.get(position).title.replace(" ", "-") + "-" + items.get(position).author.replace(" ", "-")).replace(".","%")
         //holder.horizontal_book_author.text = items[position].author
         //holder.horizontal_book_author.visibility = View.GONE
         holder.horizontal_layout.setOnClickListener()

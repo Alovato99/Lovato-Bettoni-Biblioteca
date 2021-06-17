@@ -53,7 +53,14 @@ class RentalsFragment : Fragment() {
                 if(snapshot.exists()) {
                     for (b in snapshot.children) {
                         bookDatabase.child(b.key.toString()).get().addOnSuccessListener {
-                            val book = it.getValue(Book::class.java)
+                            var book = it.getValue(Book::class.java)
+                            if(book?.title?.contains("%")!!)
+                                book.title=book?.title.replace("%", ".")
+                            if(book?.author?.contains("%")!!)
+                                book.author=book?.author.replace("%", ".")
+                            if(book?.desc?.contains("%")!!)
+                                book.desc=book?.desc.replace("%", ".")
+                            booksList.add(book!!)
                             booksList.add(book!!)
                             displayList.add(book!!)
                             rclView.layoutManager = LinearLayoutManager(activity?.baseContext, RecyclerView.VERTICAL, false)
