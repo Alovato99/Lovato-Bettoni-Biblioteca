@@ -10,6 +10,8 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.bibliotecabl.R
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.DatabaseException
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -19,6 +21,9 @@ class ManageAdminsFragment: Fragment() {
 
     var addAdmin=""
     var removeAdmin=""
+    private var auth: FirebaseAuth = Firebase.auth
+    private val currentUser = auth.currentUser
+    private val uid = currentUser!!.uid
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -68,23 +73,29 @@ class ManageAdminsFragment: Fragment() {
             removeAdmin=removeAdminText.text.toString()
             if(removeAdmin.isNotEmpty()) {
                 database.child("emailToUID").child(removeAdmin.replace(".", ",")).get().addOnSuccessListener {
-                    val userMap = HashMap<String, Any>()
-                    userMap["admin"] = false
-                    try {
-                        database.child("Users").child(it.getValue() as String).updateChildren(userMap)
-                        Toast.makeText(
-                                activity, R.string.adminRemoved,
-                                Toast.LENGTH_SHORT
-                        ).show()
+                    if(uid!=it.getValue().toString()) {
+                        val userMap = HashMap<String, Any>()
+                        userMap["admin"] = false
+                        try {
+                            database.child("Users").child(it.getValue() as String).updateChildren(userMap)
+                            Toast.makeText(
+                                    activity, R.string.adminRemoved,
+                                    Toast.LENGTH_SHORT
+                            ).show()
+                        } catch (e: java.lang.NullPointerException) {
+                            Toast.makeText(
+                                    activity, R.string.emailDoesntExists,
+                                    Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
-                    catch(e: java.lang.NullPointerException)
+                    else
                     {
                         Toast.makeText(
-                                activity, R.string.emailDoesntExists,
+                                activity, R.string.removeError,
                                 Toast.LENGTH_SHORT
                         ).show()
                     }
-
                 }.addOnFailureListener {
                     Log.d("READING_EMAIL_TO_UID", "FAIL")
                 }

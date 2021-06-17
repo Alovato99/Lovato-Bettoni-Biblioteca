@@ -98,9 +98,11 @@ class AddBooksFragment: Fragment() {
                     if (copiesText != "" && copiesText != "0") {
                         error=true
                         var actualCopies = parseInt(it.child("copies").getValue().toString())
+                        var totalCopies =parseInt(it.child("totalCopies").getValue().toString())
                         val userMap = HashMap<String, Any>()
                         copies = parseInt(copiesText)
                         userMap["copies"] = copies + actualCopies
+                        userMap["totalCopies"]=copies + totalCopies
                         bookDBReference.child(bookID).updateChildren(userMap)
                         if (description != "")
                             userMap["description"] = description
@@ -173,7 +175,7 @@ class AddBooksFragment: Fragment() {
         private fun saveBookToFirebaseDatabase(bookImageUrl: String) {
         val sdf = SimpleDateFormat("dd/M/yyyy")
         val currentDate = sdf.format(Date())
-        val book = Book(title, author,description,copies, bookImageUrl, imageId, currentDate)
+        val book = Book(title, author,description,copies,copies,bookImageUrl, imageId, currentDate)
 
 
         bookDBReference.child(bookID).setValue(book)

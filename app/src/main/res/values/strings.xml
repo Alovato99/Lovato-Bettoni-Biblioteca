@@ -44,6 +44,7 @@
     <string name="menu_manage_admins">Modifica Admin</string>
     <string name="addAdmin">Inserisci l\'email dell\'account che vuoi far diventare admin</string>
     <string name="removeAdmin">Inserisci l\'email dell\'account che vuoi togliere il ruolo di admin</string>
+    <string name="removeError">Non puoi togliere il ruolo di admin a te stesso!</string>
 
     <string name="bookCover">Copertina</string>
     <string name="bookTitle">Titolo</string>
@@ -68,6 +69,7 @@
     <string name="menu_remove_books">Rimuovi Libro</string>
     <string name="bookRemoved">Libro rimosso correttamente</string>
     <string name="bookNotFound">Non esistono libri con questo titolo e autore</string>
+    <string name="rentedBook">Non puoi rimuovere libri che sono stati prenotati!</string>
 
     <string name="bookRented">Libro prenotato correttamente</string>
     <string name="bookAlreadyRented">Hai già prenotato questo libro!</string>

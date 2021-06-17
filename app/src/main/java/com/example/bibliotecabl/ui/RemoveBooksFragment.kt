@@ -20,6 +20,7 @@ class RemoveBooksFragment : Fragment() {
     private var title=""
     private var author=""
     private var bookID : String =""
+    private var rentedBook = false
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -34,64 +35,69 @@ class RemoveBooksFragment : Fragment() {
             title=removeBookTitleEditText.text.toString()
             author=removeBookAuthorEditText.text.toString()
             bookID= title.replace(" ", "-") + "-" + author.replace(" ", "-") //EXAMPLE: "Rose-Viola-Nicola-Pascoli"
-            if(title.isNotEmpty() && author.isNotEmpty())
-            {
+            if(title.isNotEmpty() && author.isNotEmpty()) {
                 val database = Firebase.database.reference
 
 
-                    database.child("Books").child(bookID).get().addOnSuccessListener {
-                        var bookLink=it.child("imageID").getValue().toString()
-                        FirebaseStorage.getInstance().getReference().child("images").child(bookLink).delete()
-                    }
-
-
-                database.child("Books").child(bookID).removeValue()
-                Toast.makeText(
-                        activity, R.string.bookRemoved,
-                        Toast.LENGTH_SHORT
-                ).show()
-                database.child("New_Arrivals").get().addOnSuccessListener {
-                    var found=-1
-                    for(i in 0..9)
-                    {
-                        if(it.child("BookList").child(i.toString()).getValue().toString() == bookID)
-                            found=i
-                    }
-                    if(found>=0)
-                    {
-                        val bookMap = HashMap<String, Any>()
-                        val countMap = HashMap<String, Any>()
-                        var lastElement=0
-                        if(found<9)
-                        {
-                            var nextBook = ""
-                            for (i in found..8) {
-                                nextBook = it.child("BookList").child((i+1).toString()).getValue().toString()
-                                if(nextBook!="")
-                                {
-                                    bookMap[i.toString()]=nextBook
-                                    //database.child("New_Arrivals").child("BookList").updateChildren(bookMap)
-                                    if(i==8)
-                                        lastElement=i+1
+                database.child("Books").child(bookID).get().addOnSuccessListener {
+                    if (it.exists()) {
+                        if (it.child("copies").getValue().toString().toInt() != it.child("totalCopies").getValue().toString().toInt()) {
+                            Toast.makeText(
+                                    activity, R.string.rentedBook,
+                                    Toast.LENGTH_SHORT
+                            ).show()
+                        } else {
+                            var bookLink = it.child("imageID").getValue().toString()
+                            FirebaseStorage.getInstance().getReference().child("images").child(bookLink).delete()
+                            database.child("Books").child(bookID).removeValue()
+                            Toast.makeText(
+                                    activity, R.string.bookRemoved,
+                                    Toast.LENGTH_SHORT
+                            ).show()
+                            database.child("New_Arrivals").get().addOnSuccessListener {
+                                var found = -1
+                                for (i in 0..9) {
+                                    if (it.child("BookList").child(i.toString()).getValue().toString() == bookID)
+                                        found = i
                                 }
-                                else
-                                {
-                                    lastElement=i
-                                    break
+                                if (found >= 0) {
+                                    val bookMap = HashMap<String, Any>()
+                                    val countMap = HashMap<String, Any>()
+                                    var lastElement = 0
+                                    if (found < 9) {
+                                        var nextBook = ""
+                                        for (i in found..8) {
+                                            nextBook = it.child("BookList").child((i + 1).toString()).getValue().toString()
+                                            if (nextBook != "") {
+                                                bookMap[i.toString()] = nextBook
+                                                //database.child("New_Arrivals").child("BookList").updateChildren(bookMap)
+                                                if (i == 8)
+                                                    lastElement = i + 1
+                                            } else {
+                                                lastElement = i
+                                                break
+                                            }
+                                        }
+                                        bookMap[(lastElement).toString()] = ""
+                                        database.child("New_Arrivals").child("BookList").updateChildren(bookMap)
+                                        countMap["count"] = lastElement
+                                        database.child("New_Arrivals").updateChildren(countMap)
+                                    } else if (found == 9) {
+                                        bookMap["9"] = ""
+                                        database.child("New_Arrivals").child("BookList").updateChildren(bookMap)
+                                        countMap["count"] = 9
+                                        database.child("New_Arrivals").updateChildren(countMap)
+                                    }
                                 }
                             }
-                            bookMap[(lastElement).toString()]=""
-                            database.child("New_Arrivals").child("BookList").updateChildren(bookMap)
-                            countMap["count"]=lastElement
-                            database.child("New_Arrivals").updateChildren(countMap)
                         }
-                        else if(found==9)
-                        {
-                            bookMap["9"]=""
-                            database.child("New_Arrivals").child("BookList").updateChildren(bookMap)
-                            countMap["count"]=9
-                            database.child("New_Arrivals").updateChildren(countMap)
-                        }
+                    }
+                    else
+                    {
+                        Toast.makeText(
+                                activity, R.string.bookNotFound,
+                                Toast.LENGTH_SHORT
+                        ).show()
                     }
                 }
             }
