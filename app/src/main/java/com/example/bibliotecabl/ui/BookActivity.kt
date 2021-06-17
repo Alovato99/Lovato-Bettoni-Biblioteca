@@ -2,6 +2,7 @@ package com.example.bibliotecabl.ui
 
 import android.os.Bundle
 import android.provider.AlarmClock.EXTRA_MESSAGE
+import android.text.method.ScrollingMovementMethod
 import android.view.Menu
 import android.view.MenuInflater
 import android.view.MenuItem
@@ -29,6 +30,7 @@ class BookActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_book)
 
+        bookDescEditText.setMovementMethod(ScrollingMovementMethod());
         getSupportActionBar()?.setDisplayHomeAsUpEnabled(true)
         getSupportActionBar()?.setDisplayShowTitleEnabled(false);
         key = intent.getStringExtra(EXTRA_MESSAGE).toString()
