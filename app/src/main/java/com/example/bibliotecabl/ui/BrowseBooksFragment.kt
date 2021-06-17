@@ -61,6 +61,12 @@ class BrowseBooksFragment: Fragment() {
                     for(b in snapshot.children)
                     {
                         val book = b.getValue(Book::class.java)
+                        if(book?.title?.contains("%")!!)
+                            book?.title.replace("%", ".")
+                        if(book?.author?.contains("%")!!)
+                            book?.author.replace("%", ".")
+                        if(book?.desc?.contains("%")!!)
+                            book?.desc.replace("%", ".")
                         booksList.add(book!!)
                     }
 

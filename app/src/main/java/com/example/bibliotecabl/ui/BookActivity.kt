@@ -33,10 +33,10 @@ class BookActivity : AppCompatActivity() {
         getSupportActionBar()?.setDisplayShowTitleEnabled(false);
         key = intent.getStringExtra(EXTRA_MESSAGE).toString()
         database.child("Books").child(key).get().addOnSuccessListener {
-            bookTitleEditText.text=it.child("title").value.toString()
-            bookAuthorEditText.text=it.child("author").value.toString()
+            bookTitleEditText.text=it.child("title").value.toString().replace("%",".")
+            bookAuthorEditText.text=it.child("author").value.toString().replace("%",".")
             copiesEditText.text="copie: "+it.child("copies").value.toString()
-            bookDescEditText.text=it.child("desc").value.toString()
+            bookDescEditText.text=it.child("desc").value.toString().replace("%",".")
             Picasso.get().load(it.child("bookImageUrl").value.toString()).into(imageIcon)
         }
         supportActionBar?.setDisplayHomeAsUpEnabled(true)

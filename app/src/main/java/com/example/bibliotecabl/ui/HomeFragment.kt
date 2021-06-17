@@ -55,6 +55,8 @@ class HomeFragment : Fragment() {
                     for(b in snapshot.children)
                     {
                         val book = b.getValue(Book::class.java)
+                        if(book?.title?.contains("%")!!)
+                            book?.title.replace("%", ".")
                         booksList.add(book!!)
                     }
 
