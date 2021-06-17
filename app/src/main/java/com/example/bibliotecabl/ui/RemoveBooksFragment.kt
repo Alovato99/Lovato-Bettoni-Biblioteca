@@ -20,7 +20,6 @@ class RemoveBooksFragment : Fragment() {
     private var title=""
     private var author=""
     private var bookID : String =""
-    private var rentedBook = false
 
     override fun onCreateView(
             inflater: LayoutInflater,

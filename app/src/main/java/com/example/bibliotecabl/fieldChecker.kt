@@ -33,5 +33,14 @@ class fieldChecker {
         return matcher.matches()
 
     }
+    fun checkBookInfo (text: String): String
+    {
+        if(text.contains("."))
+            return text.replace(".", "%")
+        if(text.contains("#") || text.contains("$") || text.contains("[") || text.contains("]") || text.contains("%"))
+            return "[ERROR_TEXT]"
+       return text
+
+    }
 
 }

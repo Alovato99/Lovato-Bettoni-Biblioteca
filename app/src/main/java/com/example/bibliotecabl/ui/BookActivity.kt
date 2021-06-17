@@ -48,43 +48,48 @@ class BookActivity : AppCompatActivity() {
         val uid = currentUser!!.uid
         var copies=0
         database.child("Books").child(key).get().addOnSuccessListener {
-            copies=it.child("copies").value.toString().toInt()
-            if(copies>0)
+            if(it.exists())
             {
-                database.child("Rented_Books").child(uid).get().addOnSuccessListener {
-                    //Non si possono prenotare due libri uguali
-                    if (!it.child("BookList").child(key).exists())
-                    {
-                        activeRents = 1 + it.child("active_rents").value.toString().toInt()
-                        totalRents = 1 + it.child("total_rents").value.toString().toInt()
-                        val bookMap = HashMap<String, Any>()
-                        bookMap[key] = ""
-                        database.child("Rented_Books").child(uid).child("BookList").updateChildren(bookMap).addOnCompleteListener { task ->
-                            if (task.isSuccessful) {
-                                val updateMap = HashMap<String, Any>()
-                                updateMap["total_rents"] = totalRents
-                                //database.child("Rented_Books").child(uid).updateChildren(updateMap)
-                                updateMap["active_rents"] = activeRents
-                                database.child("Rented_Books").child(uid).updateChildren(updateMap)
-                                val copiesMap = HashMap<String, Any>()
-                                copiesMap["copies"] = copies - 1
-                                database.child("Books").child(key).updateChildren(copiesMap)
-                                copiesEditText.text = "copie: "+ (copies-1)
-                                Toast.makeText(
-                                        baseContext, R.string.bookRented,
-                                        Toast.LENGTH_SHORT
-                                ).show()
+                copies=it.child("copies").value.toString().toInt()
+                if(copies>0) {
+                    database.child("Rented_Books").child(uid).get().addOnSuccessListener {
+                        //Non si possono prenotare due libri uguali
+                        if (!it.child("BookList").child(key).exists()) {
+                            activeRents = 1 + it.child("active_rents").value.toString().toInt()
+                            totalRents = 1 + it.child("total_rents").value.toString().toInt()
+                            val bookMap = HashMap<String, Any>()
+                            bookMap[key] = ""
+                            database.child("Rented_Books").child(uid).child("BookList").updateChildren(bookMap).addOnCompleteListener { task ->
+                                if (task.isSuccessful) {
+                                    val updateMap = HashMap<String, Any>()
+                                    updateMap["total_rents"] = totalRents
+                                    //database.child("Rented_Books").child(uid).updateChildren(updateMap)
+                                    updateMap["active_rents"] = activeRents
+                                    database.child("Rented_Books").child(uid).updateChildren(updateMap)
+                                    val copiesMap = HashMap<String, Any>()
+                                    copiesMap["copies"] = copies - 1
+                                    database.child("Books").child(key).updateChildren(copiesMap)
+                                    copiesEditText.text = "copie: " + (copies - 1)
+                                    Toast.makeText(
+                                            baseContext, R.string.bookRented,
+                                            Toast.LENGTH_SHORT
+                                    ).show()
+                                }
                             }
+                        } else {
+                            Toast.makeText(
+                                    baseContext, R.string.bookAlreadyRented,
+                                    Toast.LENGTH_SHORT
+                            ).show()
                         }
                     }
-                    else
-                    {
-                        Toast.makeText(
-                                baseContext, R.string.bookAlreadyRented,
-                                Toast.LENGTH_SHORT
-                        ).show()
-                    }
                 }
+            }
+            else{
+                Toast.makeText(
+                        baseContext, R.string.book_removed_error,
+                        Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }
@@ -95,34 +100,42 @@ class BookActivity : AppCompatActivity() {
         val uid = currentUser!!.uid
         var copies=0
         database.child("Books").child(key).get().addOnSuccessListener {
-            copies = it.child("copies").value.toString().toInt()
-            database.child("Rented_Books").child(uid).get().addOnSuccessListener {
-                if (it.child("BookList").child(key).exists())
-                {
-                    activeRents = it.child("active_rents").value.toString().toInt()-1
-                    database.child("Rented_Books").child(uid).child("BookList").child(key).removeValue().addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            val updateMap = HashMap<String, Any>()
-                            updateMap["active_rents"] = activeRents
-                            database.child("Rented_Books").child(uid).updateChildren(updateMap)
-                            val copiesMap = HashMap<String, Any>()
-                            copiesMap["copies"] = copies + 1
-                            database.child("Books").child(key).updateChildren(copiesMap)
-                            copiesEditText.text = "copie: "+ (copies+1)
-                            Toast.makeText(
-                                    baseContext, R.string.bookReturned,
-                                    Toast.LENGTH_SHORT
-                            ).show()
+            if(it.exists())
+            {
+                copies = it.child("copies").value.toString().toInt()
+                database.child("Rented_Books").child(uid).get().addOnSuccessListener {
+                    if (it.child("BookList").child(key).exists())
+                    {
+                        activeRents = it.child("active_rents").value.toString().toInt()-1
+                        database.child("Rented_Books").child(uid).child("BookList").child(key).removeValue().addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                val updateMap = HashMap<String, Any>()
+                                updateMap["active_rents"] = activeRents
+                                database.child("Rented_Books").child(uid).updateChildren(updateMap)
+                                val copiesMap = HashMap<String, Any>()
+                                copiesMap["copies"] = copies + 1
+                                database.child("Books").child(key).updateChildren(copiesMap)
+                                copiesEditText.text = "copie: "+ (copies+1)
+                                Toast.makeText(
+                                        baseContext, R.string.bookReturned,
+                                        Toast.LENGTH_SHORT
+                                ).show()
+                            }
                         }
                     }
+                    else
+                    {
+                        Toast.makeText(
+                                baseContext, R.string.bookNotOwned,
+                                Toast.LENGTH_SHORT
+                        ).show()
+                    }
                 }
-                else
-                {
-                    Toast.makeText(
-                            baseContext, R.string.bookNotOwned,
-                            Toast.LENGTH_SHORT
-                    ).show()
-                }
+            }else{
+                Toast.makeText(
+                        baseContext, R.string.book_removed_error,
+                        Toast.LENGTH_SHORT
+                ).show()
             }
         }
     }

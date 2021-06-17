@@ -84,5 +84,8 @@
     <string name="default_author">author</string>
     <string name="default_bookName">BookName</string>
 
+    <string name="book_removed_error">Il libro selezionato è stato rimosso</string>
+
+
 
 </resources>

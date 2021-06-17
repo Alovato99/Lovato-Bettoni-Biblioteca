@@ -47,8 +47,9 @@ class HomeFragment : Fragment() {
         rclViewRentBooks=root.findViewById(R.id.books_recycler_view_home_rents)
 
 
-        database_books_reference.addListenerForSingleValueEvent(object : ValueEventListener {
+        database_books_reference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
+                booksList.clear()
                 if(snapshot!!.exists())
                 {
                     for(b in snapshot.children)
@@ -106,11 +107,7 @@ class HomeFragment : Fragment() {
             activeRents.text =getString(R.string.active_rents) +" "+ it.child("active_rents").value.toString()
             totalRents.text = getString(R.string.total_rents) +" "+ it.child("total_rents").value.toString()
         }
-        textView.setOnClickListener()
-        {
-            val intent = Intent(context, BookActivity::class.java)
-            startActivity(intent)
-        }
+
         return root
     }
 }

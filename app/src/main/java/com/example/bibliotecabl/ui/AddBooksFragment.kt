@@ -16,6 +16,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.example.bibliotecabl.R
+import com.example.bibliotecabl.fieldChecker
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -44,6 +45,7 @@ class AddBooksFragment: Fragment() {
     private var error=false
     private val bookDBReference = FirebaseDatabase.getInstance().getReference("Books")
     private val newArrivalsDBReference = FirebaseDatabase.getInstance().getReference("New_Arrivals")
+    private val infoChecker = fieldChecker()
 
     override fun onCreateView(
             inflater: LayoutInflater,
@@ -88,36 +90,57 @@ class AddBooksFragment: Fragment() {
             author = bookAuthorEditText.text.toString()
             description = bookDescEditText.text.toString()
             copiesText = copiesEditText.text.toString()
+
+            title = infoChecker.checkBookInfo(title)
+            if(title == "[ERROR_TEXT]") {
+                bookTitleEditText.setError("Caratteri non consentiti")
+                error = true
+            }
+            author = infoChecker.checkBookInfo(author)
+            if(author == "[ERROR_TEXT]") {
+                bookAuthorEditText.setError("Caratteri non consentiti")
+                error = true
+            }
+            description = infoChecker.checkBookInfo(description)
+            if(description == "[ERROR_TEXT]") {
+                bookDescEditText.setError("Caratteri non consentiti")
+                error = true
+            }
+
+
             bookID = title.replace(" ", "-") + "-" + author.replace(" ", "-") //EXAMPLE: "Rose-Viola-Nicola-Pascoli"
 
-
             //var error=false
-            bookDBReference.child(bookID).get().addOnSuccessListener {
-                if (it.hasChild("copies")) {
-                    error = true
-                    if (copiesText != "" && copiesText != "0") {
-                        error=true
-                        var actualCopies = parseInt(it.child("copies").getValue().toString())
-                        var totalCopies =parseInt(it.child("totalCopies").getValue().toString())
-                        val userMap = HashMap<String, Any>()
-                        copies = parseInt(copiesText)
-                        userMap["copies"] = copies + actualCopies
-                        userMap["totalCopies"]=copies + totalCopies
-                        bookDBReference.child(bookID).updateChildren(userMap)
-                        if (description != "")
-                            userMap["description"] = description
-                        bookDBReference.child(bookID).updateChildren(userMap)
-                        Toast.makeText(
-                                activity, R.string.bookUpdated,
-                                Toast.LENGTH_SHORT
-                        ).show()
+            if(!error)
+            {
+                bookDBReference.child(bookID).get().addOnSuccessListener {
+                    if (it.hasChild("copies")) {
+                        error = true
+                        if (copiesText != "" && copiesText != "0") {
+                            error=true
+                            var actualCopies = parseInt(it.child("copies").getValue().toString())
+                            var totalCopies =parseInt(it.child("totalCopies").getValue().toString())
+                            val userMap = HashMap<String, Any>()
+                            copies = parseInt(copiesText)
+                            userMap["copies"] = copies + actualCopies
+                            userMap["totalCopies"]=copies + totalCopies
+                            bookDBReference.child(bookID).updateChildren(userMap)
+                            if (description != "")
+                                userMap["description"] = description
+                            bookDBReference.child(bookID).updateChildren(userMap)
+                            Toast.makeText(
+                                    activity, R.string.bookUpdated,
+                                    Toast.LENGTH_SHORT
+                            ).show()
+                        }
                     }
-                }
-            }.addOnFailureListener {
+                }.addOnFailureListener {
 
-                copiesEditText.setError(getString(R.string.copiesEmpty))
-                //error = true
+                    copiesEditText.setError(getString(R.string.copiesEmpty))
+                    //error = true
+                }
             }
+
 
 
 

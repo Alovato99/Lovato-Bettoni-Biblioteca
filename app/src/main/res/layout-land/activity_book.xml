@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:layout_marginTop="0dp"
     android:layout_marginBottom="0dp"
-    android:padding="12dp"
+    android:padding="8dp"
     tools:context="ui.BookActivity">
 
     <ImageView
@@ -22,13 +22,13 @@
     <TextView
         android:id="@+id/bookTitleEditText"
         android:layout_width="200dp"
-        android:layout_height="0dp"
+        android:layout_height="wrap_content"
         android:ems="10"
         android:fontFamily="@font/teko_bold"
         android:hint="@string/bookTitle"
         android:inputType="textMultiLine"
         android:textColor="@color/black"
-        android:textSize="25sp"
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -65,7 +65,6 @@
         android:background="@drawable/multi_text_rectangle"
         android:ems="10"
         android:gravity="start|top"
-        android:hint="Descrizione"
         android:inputType="textMultiLine"
         app:layout_constraintBottom_toTopOf="@+id/rentButton"
         app:layout_constraintEnd_toEndOf="parent"
@@ -81,7 +80,6 @@
         app:backgroundTint="@color/blueLink"
         app:layout_constraintBottom_toTopOf="@+id/returnButton"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent" />
 
     <Button
@@ -93,7 +91,6 @@
         app:backgroundTint="@color/lightGrey"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.333"
         app:layout_constraintStart_toStartOf="parent" />
 
     <androidx.constraintlayout.widget.Barrier

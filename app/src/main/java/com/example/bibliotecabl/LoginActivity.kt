@@ -22,6 +22,10 @@ import kotlinx.android.synthetic.main.activity_signup.*
 
 class LoginActivity : AppCompatActivity() {
 
+
+
+    val QUICK_LOGIN_ADMIN : Boolean = true
+
     // Public field checker instance
     val checker = fieldChecker()
 
@@ -36,8 +40,15 @@ class LoginActivity : AppCompatActivity() {
         auth = Firebase.auth
 
         setContentView(R.layout.activity_login)
-        emailEditText.setText("aaaa@aaa.aa")
-        passwordEditText.setText("aaaaaa")
+        if(QUICK_LOGIN_ADMIN)
+        {
+            emailEditText.setText("admin@bibliotecaBL.it")
+            passwordEditText.setText("password")
+        }else{
+            emailEditText.setText("guest@bibliotecaBL.it")
+            passwordEditText.setText("password")
+        }
+
 
         signUpTextView.setOnClickListener {
             onSignUpClick()
