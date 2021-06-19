@@ -27,6 +27,7 @@ class HomeFragment : Fragment() {
     private val currentUser = auth.currentUser
     private val uid = currentUser!!.uid
     private val database_books_reference = Firebase.database.reference.child("Books")
+    private val database_new_arrivals_reference = Firebase.database.reference.child("New_Arrivals").child("BookList")
     private val database_rents_reference = Firebase.database.reference.child("Rented_Books").child(uid)
     private var booksList : MutableList<Book> = mutableListOf<Book>()
     private var rentalsList : MutableList<Book> = mutableListOf<Book>()
@@ -47,24 +48,25 @@ class HomeFragment : Fragment() {
         rclViewRentBooks=root.findViewById(R.id.books_recycler_view_home_rents)
 
 
-        database_books_reference.addValueEventListener(object : ValueEventListener {
+        database_new_arrivals_reference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                booksList.clear()
-                if(snapshot!!.exists())
-                {
-                    for(b in snapshot.children)
-                    {
-                        var book = b.getValue(Book::class.java)
-                        if(book?.title?.contains("%")!!)
-                            book.title=book?.title.replace("%", ".")
-                        booksList.add(book!!)
+                database_books_reference.get().addOnSuccessListener {
+                    booksList.clear()
+                    if (snapshot!!.exists()) {
+                        for (b in snapshot.children) {
+                            if (b.getValue().toString() != "") {
+                                var book = it.child(b.getValue().toString()).getValue(Book::class.java)
+                                if (book?.title?.contains("%")!!)
+                                    book.title = book?.title.replace("%", ".")
+                                booksList.add(book!!)
+                                /*rclViewNewBooks.layoutManager = LinearLayoutManager(activity?.baseContext, RecyclerView.HORIZONTAL, false)
+                                rclViewNewBooks.adapter = HorizontalItemAdapter(booksList)*/
+
+                            }
+                        }
+                        rclViewNewBooks.layoutManager = LinearLayoutManager(activity?.baseContext, RecyclerView.HORIZONTAL, false)
+                        rclViewNewBooks.adapter = HorizontalItemAdapter(booksList)
                     }
-
-                    rclViewNewBooks.layoutManager = LinearLayoutManager(activity?.baseContext, RecyclerView.HORIZONTAL, false)
-                    rclViewNewBooks.adapter = HorizontalItemAdapter(booksList)
-                    /*rclViewRentBooks.layoutManager = LinearLayoutManager(activity?.baseContext, RecyclerView.HORIZONTAL, false)
-                    rclViewRentBooks.adapter = HorizontalItemAdapter(booksList)*/
-
                 }
             }
 
@@ -74,27 +76,31 @@ class HomeFragment : Fragment() {
         })
 
 
+
+
         database_rents_reference.child("BookList").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                rentalsList.clear()
-                if(snapshot.exists()) {
-                    for (b in snapshot.children) {
-                        database_books_reference.child(b.key.toString()).get().addOnSuccessListener {
-                            var book = it.getValue(Book::class.java)
-                            if(book?.title?.contains("%")!!)
-                                book.title=book?.title.replace("%", ".")
-                            rentalsList.add(book!!)
-                            rclViewRentBooks.layoutManager = LinearLayoutManager(activity?.baseContext, RecyclerView.HORIZONTAL, false)
-                            rclViewRentBooks.adapter = HorizontalItemAdapter(rentalsList)
-                        }
-                        /*val book = b.getValue(Book::class.java)
+                database_books_reference.get().addOnSuccessListener {
+                    rentalsList.clear()
+                    if (snapshot.exists()) {
+                        for (b in snapshot.children) {
+                            //database_books_reference.child(b.key.toString()).get().addOnSuccessListener {
+                                var book = it.child(b.key.toString()).getValue(Book::class.java)
+                                if (book?.title?.contains("%")!!)
+                                    book.title = book?.title.replace("%", ".")
+                                rentalsList.add(book!!)
+                                rclViewRentBooks.layoutManager = LinearLayoutManager(activity?.baseContext, RecyclerView.HORIZONTAL, false)
+                                rclViewRentBooks.adapter = HorizontalItemAdapter(rentalsList)
+                            //}
+                            /*val book = b.getValue(Book::class.java)
                         booksList.add(book!!)*/
+                        }
+                        /*rclViewRentBooks.layoutManager = LinearLayoutManager(activity?.baseContext, RecyclerView.HORIZONTAL, false)
+                    rclViewRentBooks.adapter = HorizontalItemAdapter(rentalsList)*/
+                    } else {
+                        rclViewRentBooks.layoutManager = LinearLayoutManager(activity?.baseContext, RecyclerView.HORIZONTAL, false)
+                        rclViewRentBooks.adapter = HorizontalItemAdapter(rentalsList)
                     }
-                }
-                else
-                {
-                    rclViewRentBooks.layoutManager = LinearLayoutManager(activity?.baseContext, RecyclerView.HORIZONTAL, false)
-                    rclViewRentBooks.adapter = HorizontalItemAdapter(rentalsList)
                 }
             }
 
